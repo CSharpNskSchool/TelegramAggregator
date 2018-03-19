@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.VkMessenger.Bot.Services.BotCommands;
+using VkNet;
 
 namespace Telegram.VkMessenger.Bot.Services
 {
@@ -11,7 +15,11 @@ namespace Telegram.VkMessenger.Bot.Services
     {
         private readonly IBotService _botService;
         private readonly ILogger<UpdateService> _logger;
-
+        private readonly Dictionary<String, IBotCommand> _botCommands = new Dictionary<String, IBotCommand>()
+        {
+            {"/login", new BotCommandLogin()}
+        };
+        
         public UpdateService(IBotService botService, ILogger<UpdateService> logger)
         {
             _botService = botService;
@@ -48,24 +56,14 @@ namespace Telegram.VkMessenger.Bot.Services
 
             _logger.LogInformation($"Получена команда {commandName} с аргументами {commandArgs} из диалога: {message.Chat.Id}");
 
-            // TODO: Тут должен быть какая-нибудь фабрика с методами для всех команд,
-            //                             чтобы получать нужный по названию команды.
-            // Пока у меня только одна команда - задать acess_token, поэтому сделаю костыль
-            // Вообще надо что-то по типу команд из домашки с брэйнфаком:
-            if (commandName == "/login")
+            if (!_botCommands.ContainsKey(commandName))
             {
-                if (commandArgs.Count() != 1)
-                {
-                    await _botService.Client.SendTextMessageAsync(message.Chat.Id, $"Формат команды: /login <acess_token>");
-                    return;
-                }
-
-                var vkAcessToken = commandArgs.First();
-                await _botService.Client.SendTextMessageAsync(message.Chat.Id, $"Вы будете авторизаваны с токеном {vkAcessToken}");
-                // TODO: записать указанный токен в бд
+                return;
             }
+            
+            await _botCommands[commandName].Execute(commandArgs, _botService, message);
         }
-
+        
         private async Task HandleMessages(Update update)
         {
             var message = update.Message;
