@@ -30,26 +30,21 @@ namespace Telegram.VkMessenger.Bot.Services
         {
             if (update.Type == UpdateType.Message && update.Message.Type == MessageType.Text)
             {
-                if (update.Message.Text.StartsWith("/"))
+                var message = update.Message;
+                if (message.Text.StartsWith("/"))
                 {
-                    await HandleComands(update);
+                    await HandleComands(message);
                 }
                 else
                 {
-                    await HandleMessages(update);
+                    await HandleMessages(message);
                 }
                 
             }
         }
         
-        private async Task HandleComands(Update update)
+        private async Task HandleComands(Message message)
         {
-            var message = update.Message;
-            if (message.Type != MessageType.Text)
-            {
-                return;
-            }
-
             var messageComandAndArgs = message.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             var commandName = messageComandAndArgs.FirstOrDefault();
             var commandArgs = messageComandAndArgs.Skip(1);
@@ -64,15 +59,9 @@ namespace Telegram.VkMessenger.Bot.Services
             await _botCommands[commandName].Execute(commandArgs, _botService, message);
         }
         
-        private async Task HandleMessages(Update update)
+        private async Task HandleMessages(Message message)
         {
-            var message = update.Message;
             _logger.LogInformation("Получено сообщение из диалога {0}", message.Chat.Id);
-
-            if (message.Type != MessageType.Text)
-            {
-                return;
-            }
 
             await _botService.Client.SendTextMessageAsync(message.Chat.Id, message.Text);
         }
