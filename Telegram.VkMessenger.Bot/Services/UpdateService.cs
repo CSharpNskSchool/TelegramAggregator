@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.VkMessenger.Bot.Services.BotCommands;
-using VkNet;
 
 namespace Telegram.VkMessenger.Bot.Services
 {
@@ -17,7 +15,8 @@ namespace Telegram.VkMessenger.Bot.Services
         private readonly ILogger<UpdateService> _logger;
         private readonly Dictionary<String, IBotCommand> _botCommands = new Dictionary<String, IBotCommand>()
         {
-            {"/login", new BotCommandLogin()}
+            {"/login", new BotCommandLogin()},
+            {"/whoami", new BotCommandWhoAmI()}
         };
         
         public UpdateService(IBotService botService, ILogger<UpdateService> logger)
@@ -39,7 +38,6 @@ namespace Telegram.VkMessenger.Bot.Services
                 {
                     await HandleMessages(message);
                 }
-                
             }
         }
         
