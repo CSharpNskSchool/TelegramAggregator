@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
+using Telegram.VkMessenger.Bot.Models;
 using VkNet;
+using User = Telegram.VkMessenger.Bot.Models.User;
 
 namespace Telegram.VkMessenger.Bot.Services.BotCommands
 {
     public class BotCommandLogin : IBotCommand
     {
-        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService, Message message)
+        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService,
+            UserContext userContext, Message message)
         {
             if (commandArgs.Count() != 1)
             {
@@ -28,9 +31,18 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                     AccessToken = vkAcessToken
                 });
                 
-                var userInfo = api.Account.GetProfileInfo();
+                var userInfo = await api.Account.GetProfileInfoAsync();
                 await botService.Client.SendTextMessageAsync(message.Chat.Id,
                     $"Вы будете авторизированы как {userInfo.FirstName} {userInfo.LastName}");
+
+                await userContext.Users.AddAsync(new User
+                {
+                    TelegramId = message.From.Id,
+                    VkAcessToken = vkAcessToken,
+                    ActiveVkDialogId = 185014513
+                });
+                
+                await userContext.SaveChangesAsync();
             }
             catch (Exception e)
             {

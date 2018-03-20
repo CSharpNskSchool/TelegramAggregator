@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.VkMessenger.Bot.Models;
 using Telegram.VkMessenger.Bot.Services.BotCommands;
+using VkNet;
+using VkNet.Model.RequestParams;
 
 namespace Telegram.VkMessenger.Bot.Services
 {
     public class UpdateService : IUpdateService
     {
         private readonly IBotService _botService;
+        private readonly UserContext _userContext;
         private readonly ILogger<UpdateService> _logger;
         private readonly Dictionary<String, IBotCommand> _botCommands = new Dictionary<String, IBotCommand>()
         {
@@ -19,9 +24,10 @@ namespace Telegram.VkMessenger.Bot.Services
             {"/whoami", new BotCommandWhoAmI()}
         };
         
-        public UpdateService(IBotService botService, ILogger<UpdateService> logger)
+        public UpdateService(IBotService botService, UserContext userContext, ILogger<UpdateService> logger)
         {
             _botService = botService;
+            _userContext = userContext;    // TODO: заменить на IRepository<User>. Удобнее тестировать будет
             _logger = logger;
         }
 
@@ -54,14 +60,41 @@ namespace Telegram.VkMessenger.Bot.Services
                 return;
             }
             
-            await _botCommands[commandName].Execute(commandArgs, _botService, message);
+            await _botCommands[commandName].Execute(commandArgs, _botService, _userContext, message);
         }
         
         private async Task HandleMessages(Message message)
         {
+            // TODO: скорее всего этот метод будет использоваться для разных типов сообщений, а не только текста
+            // стоит подумать, как вынести обработку сообщений по аналогии с обработкой команд
+            // TODO: пусть в этом классе вообще не будет работы с VkApi. Некрасиво это
             _logger.LogInformation("Получено сообщение из диалога {0}", message.Chat.Id);
 
-            await _botService.Client.SendTextMessageAsync(message.Chat.Id, message.Text);
+            var user = await _userContext.Users.FirstOrDefaultAsync(u => u.TelegramId == message.From.Id);
+            
+            if (user == null)
+            {
+                return;
+            }
+            
+            try
+            {
+                var api = new VkApi();
+                await api.AuthorizeAsync(new ApiAuthParams
+                {
+                    AccessToken = user.VkAcessToken
+                });
+                
+                await api.Messages.SendAsync(new MessagesSendParams()
+                {
+                    Message = message.Text,
+                    UserId = user.ActiveVkDialogId
+                });
+            }
+            catch (Exception e)
+            {
+                await _botService.Client.SendTextMessageAsync(message.Chat.Id, $"Ошибка отправки сообщения: {e.Message}");
+            }
         }
     }
 }
