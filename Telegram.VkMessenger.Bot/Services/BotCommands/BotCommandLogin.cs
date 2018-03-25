@@ -16,7 +16,7 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
         {
             if (commandArgs.Count() != 1)
             {
-                await botService.Client.SendTextMessageAsync(message.Chat.Id, $"Формат команды: /login <acess_token>");
+                await botService.Client.SendTextMessageAsync(message.Chat.Id, "Формат команды: /login <acess_token>");
                 return;
             }
 
@@ -30,7 +30,7 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                 {
                     AccessToken = vkAcessToken
                 });
-                
+
                 var userInfo = await api.Account.GetProfileInfoAsync();
                 await botService.Client.SendTextMessageAsync(message.Chat.Id,
                     $"Вы будете авторизированы как {userInfo.FirstName} {userInfo.LastName}");
@@ -40,7 +40,7 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                     TelegramId = message.From.Id,
                     VkAcessToken = vkAcessToken
                 });
-                
+
                 await userContext.SaveChangesAsync();
             }
             catch (Exception e)

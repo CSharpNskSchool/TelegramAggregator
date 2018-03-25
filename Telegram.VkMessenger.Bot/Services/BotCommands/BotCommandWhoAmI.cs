@@ -14,14 +14,14 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
             UserContext userContext, Message message)
         {
             var user = await userContext.Users.FirstOrDefaultAsync(u => u.TelegramId == message.From.Id);
-            
+
             if (user == null)
             {
                 await botService.Client.SendTextMessageAsync(message.Chat.Id,
-                    $"Вы не авторизованы");
+                    "Вы не авторизованы");
                 return;
             }
-            
+
             try
             {
                 var api = new VkApi();
@@ -29,8 +29,9 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                 {
                     AccessToken = user.VkAcessToken
                 });
-                
+
                 var userInfo = await api.Account.GetProfileInfoAsync();
+                
                 await botService.Client.SendTextMessageAsync(message.Chat.Id,
                     $"Вы авторизированы как {userInfo.FirstName} {userInfo.LastName}");
             }

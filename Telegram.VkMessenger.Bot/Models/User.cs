@@ -1,5 +1,4 @@
-﻿
-namespace Telegram.VkMessenger.Bot.Models
+﻿namespace Telegram.VkMessenger.Bot.Models
 {
     public class User
     {
