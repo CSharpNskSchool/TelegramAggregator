@@ -38,8 +38,7 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                 await userContext.Users.AddAsync(new User
                 {
                     TelegramId = message.From.Id,
-                    VkAcessToken = vkAcessToken,
-                    ActiveVkDialogId = 185014513
+                    VkAcessToken = vkAcessToken
                 });
                 
                 await userContext.SaveChangesAsync();

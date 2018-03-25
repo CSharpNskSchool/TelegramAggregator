@@ -17,6 +17,8 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
             
             if (user == null)
             {
+                await botService.Client.SendTextMessageAsync(message.Chat.Id,
+                    $"Вы не авторизованы");
                 return;
             }
             

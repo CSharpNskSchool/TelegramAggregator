@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.VkMessenger.Bot.Models;
 using Telegram.VkMessenger.Bot.Services.BotCommands;
-using VkNet;
-using VkNet.Model.RequestParams;
 
 namespace Telegram.VkMessenger.Bot.Services
 {
@@ -31,12 +28,12 @@ namespace Telegram.VkMessenger.Bot.Services
             _logger = logger;
         }
 
-        public async Task EchoAsync(Update update)
+        public async Task Update(Update update)
         {
-            if (update.Type == UpdateType.Message && update.Message.Type == MessageType.Text)
+            if (update.Type == UpdateType.Message)
             {
                 var message = update.Message;
-                if (message.Text.StartsWith("/"))
+                if (message.Type == MessageType.Text && message.Text.StartsWith("/"))
                 {
                     await HandleComands(message);
                 }
@@ -57,6 +54,8 @@ namespace Telegram.VkMessenger.Bot.Services
 
             if (!_botCommands.ContainsKey(commandName))
             {
+                await _botService.Client.SendTextMessageAsync(message.Chat.Id, 
+                    $"Ошибка выполнения команды {commandName}: неизвестная команда");
                 return;
             }
             
@@ -67,34 +66,10 @@ namespace Telegram.VkMessenger.Bot.Services
         {
             // TODO: скорее всего этот метод будет использоваться для разных типов сообщений, а не только текста
             // стоит подумать, как вынести обработку сообщений по аналогии с обработкой команд
-            // TODO: пусть в этом классе вообще не будет работы с VkApi. Некрасиво это
             _logger.LogInformation("Получено сообщение из диалога {0}", message.Chat.Id);
 
-            var user = await _userContext.Users.FirstOrDefaultAsync(u => u.TelegramId == message.From.Id);
-            
-            if (user == null)
-            {
-                return;
-            }
-            
-            try
-            {
-                var api = new VkApi();
-                await api.AuthorizeAsync(new ApiAuthParams
-                {
-                    AccessToken = user.VkAcessToken
-                });
-                
-                await api.Messages.SendAsync(new MessagesSendParams()
-                {
-                    Message = message.Text,
-                    UserId = user.ActiveVkDialogId
-                });
-            }
-            catch (Exception e)
-            {
-                await _botService.Client.SendTextMessageAsync(message.Chat.Id, $"Ошибка отправки сообщения: {e.Message}");
-            }
+            await _botService.Client.SendTextMessageAsync(message.Chat.Id, 
+                $"Ошибка отправки сообщения: эта функция еще не реализована");
         }
     }
 }
