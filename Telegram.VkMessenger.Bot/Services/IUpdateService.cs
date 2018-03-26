@@ -5,6 +5,6 @@ namespace Telegram.VkMessenger.Bot.Services
 {
     public interface IUpdateService
     {
-        Task EchoAsync(Update update);
+        Task Update(Update update);
     }
 }
