@@ -10,8 +10,8 @@ namespace Telegram.VkMessenger.Bot.Services
     public class UpdateService : IUpdateService
     {
         private readonly IBotService _botService;
-        private readonly ILogger<UpdateService> _logger;
         private readonly UserContext _userContext;
+        private readonly ILogger<UpdateService> _logger;
 
         public UpdateService(IBotService botService, UserContext userContext, ILogger<UpdateService> logger)
         {
@@ -42,9 +42,6 @@ namespace Telegram.VkMessenger.Bot.Services
 
         private async Task HandleMessages(Message message)
         {
-            // TODO: скорее всего этот метод будет использоваться для разных типов сообщений, а не только текста
-            // стоит подумать, как вынести обработку сообщений по аналогии с обработкой команд
-
             await _botService.Client.SendTextMessageAsync(message.Chat.Id,
                 "Ошибка отправки сообщения: эта функция еще не реализована");
         }
