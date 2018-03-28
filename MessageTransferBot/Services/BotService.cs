@@ -1,18 +1,18 @@
 ﻿using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
-namespace Telegram.VkMessenger.Bot.Services
+namespace MessageTransferBot.Services
 {
     public class BotService : IBotService
     {
-        private readonly BotConfiguration _config;
-
         public BotService(IOptions<BotConfiguration> config)
         {
-            _config = config.Value;
-            Client = new TelegramBotClient(_config.BotToken);
+            Configuration = config.Value;
+            Client = new TelegramBotClient(Configuration.BotToken);
         }
 
         public TelegramBotClient Client { get; }
+
+        public BotConfiguration Configuration { get; }
     }
 }

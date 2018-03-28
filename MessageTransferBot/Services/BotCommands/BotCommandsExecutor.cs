@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MessageTransferBot.Data.Entities;
 using Telegram.Bot.Types;
-using Telegram.VkMessenger.Bot.Models;
 
-namespace Telegram.VkMessenger.Bot.Services.BotCommands
+namespace MessageTransferBot.Services.BotCommands
 {
     public static class BotCommandsExecutor
     {
         private static readonly Dictionary<string, IBotCommand> BotCommands = new Dictionary<string, IBotCommand>
         {
             {"/login", new BotCommandLogin()},
+            {"/setPeer", new BotCommandSetPeer()},
             {"/whoami", new BotCommandWhoAmI()}
         };
 
-        public static async Task HandleComands(IBotService botService, UserContext userContext, Message message)
+        public static async Task HandleComands(IBotService botService, BotUser botUser, Message message)
         {
             var messageComandAndArgs = message.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             var commandName = messageComandAndArgs.FirstOrDefault();
@@ -28,7 +29,7 @@ namespace Telegram.VkMessenger.Bot.Services.BotCommands
                 return;
             }
 
-            await BotCommands[commandName].Execute(commandArgs, botService, userContext, message);
+            await BotCommands[commandName].Execute(commandArgs, botService, botUser, message);
         }
     }
 }

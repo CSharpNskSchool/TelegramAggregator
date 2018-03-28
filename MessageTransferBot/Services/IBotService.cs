@@ -1,9 +1,10 @@
 ﻿using Telegram.Bot;
 
-namespace Telegram.VkMessenger.Bot.Services
+namespace MessageTransferBot.Services
 {
     public interface IBotService
     {
         TelegramBotClient Client { get; }
+        BotConfiguration Configuration { get; }
     }
 }

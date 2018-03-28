@@ -1,4 +1,4 @@
-﻿namespace Telegram.VkMessenger.Bot
+﻿namespace MessageTransferBot
 {
     public class BotConfiguration
     {

@@ -8,4 +8,10 @@
     <PackageReference Include="Telegram.Bot" Version="14.2.0-rc-452" />
     <PackageReference Include="VkNet" Version="1.32.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MessageTransferBot.Data\MessageTransferBot.Data.csproj">
+      <Project>{6636D755-B3B9-4173-8649-F299AEB29F4C}</Project>
+      <Name>MessageTransferBot.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

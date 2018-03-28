@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Telegram.VkMessenger.Bot
+namespace MessageTransferBot
 {
     public static class Program
     {

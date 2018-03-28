@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using MessageTransferBot.Services;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot.Types;
-using Telegram.VkMessenger.Bot.Services;
 
-namespace Telegram.VkMessenger.Bot.Controllers
+namespace MessageTransferBot.Controllers
 {
     [Route("api/[controller]")]
     public class UpdateController : Controller
@@ -15,7 +15,6 @@ namespace Telegram.VkMessenger.Bot.Controllers
             _updateService = updateService;
         }
 
-        // POST api/update
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Update update)
         {
