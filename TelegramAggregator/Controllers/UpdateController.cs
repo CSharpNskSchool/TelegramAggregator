@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using MessageTransferBot.Services;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot.Types;
+using TelegramAggregator.Services;
 
-namespace MessageTransferBot.Controllers
+namespace TelegramAggregator.Controllers
 {
     [Route("api/[controller]")]
     public class UpdateController : Controller

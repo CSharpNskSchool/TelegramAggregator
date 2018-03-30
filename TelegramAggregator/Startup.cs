@@ -1,10 +1,10 @@
-﻿using MessageTransferBot.Data.Repositories;
-using MessageTransferBot.Services;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TelegramAggregator.Data.Repositories;
+using TelegramAggregator.Services;
 
-namespace MessageTransferBot
+namespace TelegramAggregator
 {
     public class Startup
     {

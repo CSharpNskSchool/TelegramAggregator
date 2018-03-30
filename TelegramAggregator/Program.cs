@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace MessageTransferBot
+namespace TelegramAggregator
 {
     public static class Program
     {

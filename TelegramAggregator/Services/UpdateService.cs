@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using MessageTransferBot.Data.Entities;
-using MessageTransferBot.Data.Repositories;
-using MessageTransferBot.Services.BotCommands;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using TelegramAggregator.Data.Entities;
+using TelegramAggregator.Data.Repositories;
+using TelegramAggregator.Services.BotCommands;
 
-namespace MessageTransferBot.Services
+namespace TelegramAggregator.Services
 {
     public class UpdateService : IUpdateService
     {

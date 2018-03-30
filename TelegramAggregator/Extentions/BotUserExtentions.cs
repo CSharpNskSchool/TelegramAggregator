@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using MessageTransferBot.Data.Entities;
+using TelegramAggregator.Data.Entities;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
 
-namespace MessageTransferBot.Extentions
+namespace TelegramAggregator.Extentions
 {
     public static class BotUserExtentions
     {

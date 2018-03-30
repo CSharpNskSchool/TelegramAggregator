@@ -1,4 +1,4 @@
-﻿namespace MessageTransferBot
+﻿namespace TelegramAggregator
 {
     public class BotConfiguration
     {

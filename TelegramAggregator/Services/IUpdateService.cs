@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Telegram.Bot.Types;
 
-namespace MessageTransferBot.Services
+namespace TelegramAggregator.Services
 {
     public interface IUpdateService
     {

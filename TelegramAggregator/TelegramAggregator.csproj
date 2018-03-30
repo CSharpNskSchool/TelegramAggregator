@@ -9,9 +9,9 @@
     <PackageReference Include="VkNet" Version="1.32.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MessageTransferBot.Data\MessageTransferBot.Data.csproj">
-      <Project>{6636D755-B3B9-4173-8649-F299AEB29F4C}</Project>
-      <Name>MessageTransferBot.Data</Name>
+    <ProjectReference Include="..\TelegramAggregator.Data\TelegramAggregator.Data.csproj">
+      <Project>{ABE946E2-EDE6-4DD4-BC71-4D8EF21794B7}</Project>
+      <Name>TelegramAggregator.Data</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

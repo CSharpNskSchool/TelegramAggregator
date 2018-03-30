@@ -1,4 +1,4 @@
-﻿namespace MessageTransferBot.Data.Entities
+﻿namespace TelegramAggregator.Data.Entities
 {
     public class BotUser
     {

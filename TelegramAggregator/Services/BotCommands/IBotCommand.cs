@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MessageTransferBot.Data.Entities;
 using Telegram.Bot.Types;
+using TelegramAggregator.Data.Entities;
 
-namespace MessageTransferBot.Services.BotCommands
+namespace TelegramAggregator.Services.BotCommands
 {
     public interface IBotCommand
     {

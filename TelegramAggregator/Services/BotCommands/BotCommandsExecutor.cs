@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MessageTransferBot.Data.Entities;
 using Telegram.Bot.Types;
+using TelegramAggregator.Data.Entities;
 
-namespace MessageTransferBot.Services.BotCommands
+namespace TelegramAggregator.Services.BotCommands
 {
     public static class BotCommandsExecutor
     {

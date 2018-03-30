@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using MessageTransferBot.Data.Entities;
+using TelegramAggregator.Data.Entities;
 
-namespace MessageTransferBot.Data.Repositories
+namespace TelegramAggregator.Data.Repositories
 {
     public class BotUserRepository : IBotUserRepository
     {

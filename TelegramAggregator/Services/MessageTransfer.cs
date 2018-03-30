@@ -3,14 +3,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using MessageTransferBot.Data.Entities;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using TelegramAggregator.Data.Entities;
 using VkNet;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
 
-namespace MessageTransferBot.Services
+namespace TelegramAggregator.Services
 {
     public static class MessageTransfer
     {

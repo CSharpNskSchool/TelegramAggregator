@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot;
 
-namespace MessageTransferBot.Services
+namespace TelegramAggregator.Services
 {
     public interface IBotService
     {

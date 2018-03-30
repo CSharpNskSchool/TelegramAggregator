@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Telegram.Bot;
 
-namespace MessageTransferBot.Services
+namespace TelegramAggregator.Services
 {
     public class BotService : IBotService
     {

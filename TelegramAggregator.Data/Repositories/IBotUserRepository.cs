@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MessageTransferBot.Data.Entities;
+using TelegramAggregator.Data.Entities;
 
-namespace MessageTransferBot.Data.Repositories
+namespace TelegramAggregator.Data.Repositories
 {
     public interface IBotUserRepository
     {
