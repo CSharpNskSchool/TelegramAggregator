@@ -5,6 +5,8 @@ using Telegram.Bot.Types.Enums;
 using TelegramAggregator.Data.Entities;
 using TelegramAggregator.Data.Repositories;
 using TelegramAggregator.Services.BotCommands;
+using TelegramAggregator.Services.CommandsHandler;
+using TelegramAggregator.Services.MessagesTrasfer;
 
 namespace TelegramAggregator.Services
 {
@@ -12,13 +14,21 @@ namespace TelegramAggregator.Services
     {
         private readonly IBotService _botService;
         private readonly IBotUserRepository _botUserRepository;
+        private readonly IMessageTransfer _messageTransfer;
+        private readonly ICommandsHandler _commandsHandler;
         private readonly ILogger<UpdateService> _logger;
 
-        public UpdateService(IBotService botService, IBotUserRepository botUserRepository,
+        public UpdateService(
+            IBotService botService, 
+            IBotUserRepository botUserRepository,
+            IMessageTransfer messageTransfer,
+            ICommandsHandler commandsHandler,
             ILogger<UpdateService> logger)
         {
             _botService = botService;
             _botUserRepository = botUserRepository;
+            _messageTransfer = messageTransfer;
+            _commandsHandler = commandsHandler;
             _logger = logger;
         }
 
@@ -33,13 +43,13 @@ namespace TelegramAggregator.Services
                 {
                     _logger.LogInformation($"Получена команда из диалога {message.Chat.Id}");
 
-                    await BotCommandsExecutor.HandleComands(_botService, botUser, message);
+                    await _commandsHandler.Transfer(botUser, message);
                 }
                 else
                 {
                     _logger.LogInformation($"Получено сообщение из диалога {message.Chat.Id}");
 
-                    await MessageTransfer.TransferToVk(message, botUser, _botService);
+                    await _messageTransfer.Transfer(botUser, message);
                 }
             }
         }
@@ -47,6 +57,7 @@ namespace TelegramAggregator.Services
         private BotUser GetRequestingUserOrRegisterNew(int telegramId)
         {
             var botUser = _botUserRepository.GetByTelegramId(telegramId);
+            
             if (botUser == null)
             {
                 botUser = new BotUser

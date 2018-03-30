@@ -28,7 +28,8 @@ namespace TelegramAggregator.Extentions
             botUser.VkAccount = new VkAccount
             {
                 Id = user.Id,
-                AcessToken = acessToken
+                AcessToken = acessToken,
+                CurrentPeer = user.Id
             };
 
             return user;

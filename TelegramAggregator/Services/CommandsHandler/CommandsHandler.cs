@@ -4,32 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using TelegramAggregator.Data.Entities;
+using TelegramAggregator.Services.BotCommands;
 
-namespace TelegramAggregator.Services.BotCommands
+namespace TelegramAggregator.Services.CommandsHandler
 {
-    public static class BotCommandsExecutor
+    public class CommandsHandler : ICommandsHandler
     {
+        private readonly IBotService _botService;
         private static readonly Dictionary<string, IBotCommand> BotCommands = new Dictionary<string, IBotCommand>
         {
             {"/login", new BotCommandLogin()},
             {"/setPeer", new BotCommandSetPeer()},
             {"/whoami", new BotCommandWhoAmI()}
         };
-
-        public static async Task HandleComands(IBotService botService, BotUser botUser, Message message)
+        
+        public CommandsHandler(IBotService botService)
         {
-            var messageComandAndArgs = message.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            _botService = botService;
+        }
+
+        public async Task Transfer(BotUser botUser, Message commandMessage)
+        {
+            var messageComandAndArgs = commandMessage.Text.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             var commandName = messageComandAndArgs.FirstOrDefault();
             var commandArgs = messageComandAndArgs.Skip(1);
 
             if (!BotCommands.ContainsKey(commandName))
             {
-                await botService.Client.SendTextMessageAsync(message.Chat.Id,
+                await _botService.Client.SendTextMessageAsync(commandMessage.Chat.Id,
                     $"Ошибка выполнения команды {commandName}: неизвестная команда");
                 return;
             }
 
-            await BotCommands[commandName].Execute(commandArgs, botService, botUser, message);
+            await BotCommands[commandName].Execute(commandArgs, _botService, botUser, commandMessage);
         }
     }
 }

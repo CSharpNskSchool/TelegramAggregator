@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TelegramAggregator.Data.Repositories;
 using TelegramAggregator.Services;
+using TelegramAggregator.Services.CommandsHandler;
+using TelegramAggregator.Services.MessagesTrasfer;
 
 namespace TelegramAggregator
 {
@@ -13,13 +15,15 @@ namespace TelegramAggregator
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<IUpdateService, UpdateService>();
             services.AddSingleton<IBotService, BotService>();
+            services.AddScoped<IUpdateService, UpdateService>();
+            services.AddScoped<IMessageTransfer, VkNativeMessageTransfer>();
+            services.AddScoped<ICommandsHandler, CommandsHandler>();
             services.AddScoped<IBotUserRepository, BotUserRepository>();
 
             services.Configure<BotConfiguration>(Configuration.GetSection("BotConfiguration"));
