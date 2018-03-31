@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Telegram.Bot" Version="14.2.0-rc-452" />
+    <PackageReference Include="VkNet" Version="1.32.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TelegramAggregator.Data\TelegramAggregator.Data.csproj">
+      <Project>{ABE946E2-EDE6-4DD4-BC71-4D8EF21794B7}</Project>
+      <Name>TelegramAggregator.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
