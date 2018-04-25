@@ -24,14 +24,14 @@ namespace TelegramAggregator.Data.Repositories
 
         public BotUser GetByTelegramId(int telegramId)
         {
-            var botUser = users.Values.FirstOrDefault(user => user.TelegramId == telegramId);
+            var botUser = users.Values.FirstOrDefault(user => user.TelegramUserId == telegramId);
 
             return botUser;
         }
 
         public void Add(BotUser botUser)
         {
-            users.TryAdd(botUser.TelegramId, botUser);
+            users.TryAdd(botUser.TelegramUserId, botUser);
         }
     }
 }

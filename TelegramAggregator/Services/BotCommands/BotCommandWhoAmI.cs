@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using TelegramAggregator.Data.Entities;
 using TelegramAggregator.Extentions;
+using TelegramAggregator.Services.MessagesNotify;
 
 namespace TelegramAggregator.Services.BotCommands
 {
     public class BotCommandWhoAmI : IBotCommand
     {
-        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService, BotUser botUser,
+        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService, IMessageNotify messageNotify,
+            BotUser botUser,
             Message message)
         {
             if (botUser.VkAccount == null)

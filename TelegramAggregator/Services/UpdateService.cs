@@ -37,7 +37,7 @@ namespace TelegramAggregator.Services
             if (update.Type == UpdateType.Message)
             {
                 var message = update.Message;
-                var botUser = GetRequestingUserOrRegisterNew(message.From.Id);
+                var botUser = GetRequestingUserOrRegisterNew(message.From.Id, message.Chat.Id);
 
                 if (message.Type == MessageType.Text && message.Text.StartsWith("/"))
                 {
@@ -54,15 +54,16 @@ namespace TelegramAggregator.Services
             }
         }
 
-        private BotUser GetRequestingUserOrRegisterNew(int telegramId)
+        private BotUser GetRequestingUserOrRegisterNew(int telegramUserId, long telegramChatId)
         {
-            var botUser = _botUserRepository.GetByTelegramId(telegramId);
+            var botUser = _botUserRepository.GetByTelegramId(telegramUserId);
             
             if (botUser == null)
             {
                 botUser = new BotUser
                 {
-                    TelegramId = telegramId
+                    TelegramUserId = telegramUserId,
+                    TelegramChatId = telegramChatId
                 };
 
                 _botUserRepository.Add(botUser);

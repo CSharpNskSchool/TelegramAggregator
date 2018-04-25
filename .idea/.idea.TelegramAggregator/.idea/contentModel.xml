@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\banyr\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_TelegramAggregator.1010530778.00" t="ExcludeRecursive" />
+    <e p="D:\Documents\SKB_KONTUR\TelegramAggregator" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="TelegramAggregator" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="BotConfiguration.cs" t="Include" />
+        <e p="Controllers" t="Include">
+          <e p="UpdateController.cs" t="Include" />
+        </e>
+        <e p="devnull.png" t="Include" />
+        <e p="Extentions" t="Include">
+          <e p="BotUserExtentions.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="TelegramAggregator.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="BotCommands" t="Include">
+            <e p="BotCommandLogin.cs" t="Include" />
+            <e p="BotCommandSetPeer.cs" t="Include" />
+            <e p="BotCommandWhoAmI.cs" t="Include" />
+            <e p="IBotCommand.cs" t="Include" />
+          </e>
+          <e p="BotService.cs" t="Include" />
+          <e p="CommandsHandler" t="Include">
+            <e p="CommandsHandler.cs" t="Include" />
+            <e p="ICommandsHandler.cs" t="Include" />
+          </e>
+          <e p="IBotService.cs" t="Include" />
+          <e p="IUpdateService.cs" t="Include" />
+          <e p="MessagesNotify" t="Include">
+            <e p="IMessageNotify.cs" t="Include" />
+            <e p="MessageNotify.cs" t="Include" />
+          </e>
+          <e p="MessagesTrasfer" t="Include">
+            <e p="IMessageTransfer.cs" t="Include" />
+            <e p="VkNativeMessageTransfer.cs" t="Include" />
+          </e>
+          <e p="UpdateService.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="TelegramAggregator.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TelegramAggregator.Data" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Entities" t="Include">
+          <e p="BotUser.cs" t="Include" />
+          <e p="VkAccount.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="TelegramAggregator.Data.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="BotUserRepository.cs" t="Include" />
+          <e p="IBotUserRepository.cs" t="Include" />
+        </e>
+        <e p="TelegramAggregator.Data.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TelegramAggregator.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

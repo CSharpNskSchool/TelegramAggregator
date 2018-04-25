@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TelegramAggregator.Data.Repositories;
 using TelegramAggregator.Services;
 using TelegramAggregator.Services.CommandsHandler;
+using TelegramAggregator.Services.MessagesNotify;
 using TelegramAggregator.Services.MessagesTrasfer;
 
 namespace TelegramAggregator
@@ -21,6 +22,7 @@ namespace TelegramAggregator
         {
             services.AddMvc();
             services.AddSingleton<IBotService, BotService>();
+            services.AddSingleton<IMessageNotify, MessageNotify>();
             services.AddScoped<IUpdateService, UpdateService>();
             services.AddScoped<IMessageTransfer, VkNativeMessageTransfer>();
             services.AddScoped<ICommandsHandler, CommandsHandler>();

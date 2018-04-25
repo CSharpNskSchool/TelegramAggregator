@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using TelegramAggregator.Data.Entities;
 using TelegramAggregator.Services.BotCommands;
+using TelegramAggregator.Services.MessagesNotify;
 
 namespace TelegramAggregator.Services.CommandsHandler
 {
     public class CommandsHandler : ICommandsHandler
     {
         private readonly IBotService _botService;
+        private readonly IMessageNotify _messageNotify;
         private static readonly Dictionary<string, IBotCommand> BotCommands = new Dictionary<string, IBotCommand>
         {
             {"/login", new BotCommandLogin()},
@@ -18,9 +20,10 @@ namespace TelegramAggregator.Services.CommandsHandler
             {"/whoami", new BotCommandWhoAmI()}
         };
         
-        public CommandsHandler(IBotService botService)
+        public CommandsHandler(IBotService botService, IMessageNotify messageNotify)
         {
             _botService = botService;
+            _messageNotify = messageNotify;
         }
 
         public async Task Transfer(BotUser botUser, Message commandMessage)
@@ -36,7 +39,7 @@ namespace TelegramAggregator.Services.CommandsHandler
                 return;
             }
 
-            await BotCommands[commandName].Execute(commandArgs, _botService, botUser, commandMessage);
+            await BotCommands[commandName].Execute(commandArgs, _botService, _messageNotify, botUser, commandMessage);
         }
     }
 }
