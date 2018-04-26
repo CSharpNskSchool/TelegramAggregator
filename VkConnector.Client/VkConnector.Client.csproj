@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VkConnector\VkConnector.csproj">
+      <Project>{A5DF37C1-07B8-4507-98E3-F93958F9CD90}</Project>
+      <Name>VkConnector</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
