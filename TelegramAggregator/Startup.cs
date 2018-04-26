@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using TelegramAggregator.Data.Repositories;
 using TelegramAggregator.Services;
 using TelegramAggregator.Services.CommandsHandler;
-using TelegramAggregator.Services.MessagesNotify;
-using TelegramAggregator.Services.MessagesTrasfer;
+using TelegramAggregator.Services.MessageTransferService;
+using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator
 {
@@ -22,11 +25,24 @@ namespace TelegramAggregator
         {
             services.AddMvc();
             services.AddSingleton<IBotService, BotService>();
-            services.AddSingleton<IMessageNotify, MessageNotify>();
+            services.AddSingleton<INotificationsService, NotificationsService>();
             services.AddScoped<IUpdateService, UpdateService>();
-            services.AddScoped<IMessageTransfer, VkNativeMessageTransfer>();
+            services.AddScoped<IMessageTransferService, MessageTransferService>();
             services.AddScoped<ICommandsHandler, CommandsHandler>();
             services.AddScoped<IBotUserRepository, BotUserRepository>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v0", new Info
+                {
+                    Version = "v0",
+                    Title = "TelegramAggregator API",
+                    Description = "Telegram Aggregator Web API",
+                });
+                
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "TelegramAggregator.xml"); 
+                c.IncludeXmlComments(xmlPath);
+            });
 
             services.Configure<BotConfiguration>(Configuration.GetSection("BotConfiguration"));
         }
@@ -34,6 +50,11 @@ namespace TelegramAggregator
         public void Configure(IApplicationBuilder app)
         {
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v0/swagger.json", "TelegramAggregator V0");
+            });
         }
     }
 }

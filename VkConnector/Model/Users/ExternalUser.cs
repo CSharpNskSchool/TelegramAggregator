@@ -5,7 +5,7 @@
     /// </summary>
     public class ExternalUser
     {
-        public ExternalUser(string id)
+        public ExternalUser(long id)
         {
             Id = id;
         }
@@ -13,6 +13,6 @@
         /// <summary>
         ///     Id этого челика в соц.сети
         /// </summary>
-        public string Id { get; }
+        public long Id { get; }
     }
 }

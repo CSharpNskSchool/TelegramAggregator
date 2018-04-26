@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using TelegramAggregator.Data.Entities;
 using TelegramAggregator.Extentions;
-using TelegramAggregator.Services.MessagesNotify;
+using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator.Services.BotCommands
 {
     public class BotCommandLogin : IBotCommand
     {
-        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService, IMessageNotify messageNotify,
+        public async Task Execute(IEnumerable<string> commandArgs, IBotService botService, INotificationsService notificationsService,
             BotUser botUser,
             Message message)
         {
@@ -26,7 +26,7 @@ namespace TelegramAggregator.Services.BotCommands
             try
             {
                 var vkUser = botUser.AuthorizeVk(vkAcessToken);
-                messageNotify.StartSubsribe(botUser);
+                notificationsService.EnableNotifications(botUser);
                 
                 await botService.Client.SendTextMessageAsync(message.Chat.Id,
                     $"Вы авторизированы как {vkUser.FirstName} {vkUser.LastName}");

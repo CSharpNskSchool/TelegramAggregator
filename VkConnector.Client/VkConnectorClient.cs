@@ -15,7 +15,7 @@ namespace VkConnector.Client
         private readonly string _apiUrl;
         private readonly string _apiVersion;
 
-        public VkConnectorClient(string apiUrl, string apiVersion)
+        public VkConnectorClient(string apiUrl, string apiVersion = null)
         {
             _apiUrl = apiUrl;
             _apiVersion = apiVersion;
