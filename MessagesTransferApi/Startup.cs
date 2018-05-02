@@ -22,9 +22,8 @@ namespace MessagesTransferApi
         {
             services.AddTokenGeneratorService();
             services.AddAggregatorSenderService();
-
-            services.AddDbContext<DataContext>(options => 
-                        options.UseInMemoryDatabase("MessagesTransferData"));
+            
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("MessagesTransferData"));
             services.AddMvc();
 
             services.AddSwaggerGen(c =>

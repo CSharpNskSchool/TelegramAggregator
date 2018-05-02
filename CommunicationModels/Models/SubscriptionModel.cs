@@ -11,11 +11,6 @@ namespace CommunicationModels.Models
         public Uri Url { get; set; }
 
         /// <summary>
-        ///     Токен, для определения пользователя, подписываемого на уводомления
-        /// </summary>
-        public string UserToken { get; set; }
-
-        /// <summary>
         ///     Информация для авторизации
         /// </summary>
         public AuthorizedUser User { get; set; }

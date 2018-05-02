@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using VkConnector.Client;
 using System;
 using CommunicationModels.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MessagesTransferApi.Controllers
 {
@@ -18,13 +19,16 @@ namespace MessagesTransferApi.Controllers
         private readonly DataContext _context;
 
         private readonly ITokenGeneratorService _tokenGenerator;
+        private readonly HttpRequest request;
 
         public AggregatorController(
             DataContext context,
-            ITokenGeneratorService tokenGenerator)
+            ITokenGeneratorService tokenGenerator,
+            IHttpContextAccessor httpContextAccessor)
         {
             this._context = context;
             this._tokenGenerator = tokenGenerator;
+            this.request = httpContextAccessor.HttpContext.Request;
         }
 
         /// <summary>
@@ -147,13 +151,11 @@ namespace MessagesTransferApi.Controllers
                 PlatformName = account.NetworkName,
                 AccessToken = account.AccessToken
             };
-
-            //вроде так, проверьте кто будет читать)
+            
             await new ConnectorsClient(connector.Url)
                     .SetWebHook(new SubscriptionModel()
                     {
-                        Url = new Uri($"{Request.PathBase}/Connector/Messages/"),
-                        UserToken = userToken,
+                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}"),
                         User = new AuthorizedUser()
                         {
                             AccessToken = account.AccessToken

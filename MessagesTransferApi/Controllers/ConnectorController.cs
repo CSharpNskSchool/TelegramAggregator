@@ -62,8 +62,8 @@ namespace MessagesTransferApi.Controllers
         /// <param name="id">id получателя (хз что и зачем) </param>
         /// <returns></returns>
         [HttpPost]
-        [Route("Messages")]
-        public async Task<IActionResult> SendMessage([FromBody] ConnectorMessage messageData, [FromQuery] string networkName, string id)
+        [Route("Messages{id:int}")]
+        public async Task<IActionResult> SendMessage([FromBody] ConnectorMessage messageData, [FromQuery] string networkName, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -73,9 +73,9 @@ namespace MessagesTransferApi.Controllers
             var user = await _context
                 .Users
                 .Include(u => u.Accounts)
-                .FirstOrDefaultAsync(u => u.UserToken == messageData.UserToken);
+                .FirstOrDefaultAsync(u => u.Id == id);
 
-            if(user == null)
+            if (user == null)
             {
                 return BadRequest("Неверный токен");
             }
