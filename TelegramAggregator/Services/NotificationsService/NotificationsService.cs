@@ -1,10 +1,8 @@
-﻿using System;
+﻿using CommunicationModels.Models;
+using System;
 using System.Threading.Tasks;
 using TelegramAggregator.Data.Entities;
 using VkConnector.Client;
-using VkConnector.Model;
-using VkConnector.Model.Messages;
-using VkConnector.Model.Users;
 
 namespace TelegramAggregator.Services.NotificationsService
 {
@@ -22,7 +20,7 @@ namespace TelegramAggregator.Services.NotificationsService
         
         public async Task EnableNotifications(BotUser botUser)
         {
-            var connector = new VkConnectorClient("http://localhost:5000");
+            var connector = new ConnectorsClient("http://localhost:5000");
 
             await connector.SetWebHook(new SubscriptionModel()
             {

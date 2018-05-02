@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using VkConnector.Model;
-using VkConnector.Model.Messages;
+﻿using CommunicationModels.Models;
+using System.Threading.Tasks;
 
 namespace VkConnector.Client
 {
-    public interface IVkConnectorClient
+    public interface IConnectorsClient
     {
         Task SendMessage(TransmittedMessage transmittedMessage);
         Task SetWebHook(SubscriptionModel subscriptionModel);

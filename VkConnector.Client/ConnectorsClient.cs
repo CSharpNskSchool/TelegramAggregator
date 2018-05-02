@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CommunicationModels.Models;
 using Newtonsoft.Json;
-using VkConnector.Model;
-using VkConnector.Model.Messages;
 
 namespace VkConnector.Client
 {
-    public class VkConnectorClient : IVkConnectorClient
+    public class ConnectorsClient : IConnectorsClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
         private readonly string _apiVersion;
 
-        public VkConnectorClient(string apiUrl, string apiVersion = null)
+        public ConnectorsClient(string apiUrl, string apiVersion = null)
         {
             _apiUrl = apiUrl;
             _apiVersion = apiVersion;
@@ -31,19 +30,20 @@ namespace VkConnector.Client
         {
             return InvokeApiMethod(HttpMethod.Post, "subscribe", content: subscriptionModel);
         }
-        
-        private Task InvokeApiMethod(HttpMethod httpMethod,
-                                     string path,
+
+        private Task InvokeApiMethod(
+            HttpMethod httpMethod,
+            string path,
             string ticket = null,
-                                     object content = null,
-                                     Dictionary<string, string> headers = null)
+            object content = null,
+            Dictionary<string, string> headers = null)
         {
             return MakeRequest(httpMethod, path, ticket, content, headers);
         }
 
         private async Task<T> InvokeApiMethod<T>(HttpMethod httpMethod, 
                                                  string path, 
-                                                    string ticket = null,
+                                                 string ticket = null,
                                                  object content = null,
                                                  Dictionary<string, string> headers = null)
         {
@@ -60,7 +60,7 @@ namespace VkConnector.Client
                                                             object content = null,
                                                             Dictionary<string, string> headers = null)
         {
-//            var request = new HttpRequestMessage(httpMethod, $"{_apiUrl}/api/{_apiVersion}/{path}");
+            // var request = new HttpRequestMessage(httpMethod, $"{_apiUrl}/api/{_apiVersion}/{path}");
             var request = new HttpRequestMessage(httpMethod, $"{_apiUrl}/api/{path}");
 
             if (bearerToken != null)

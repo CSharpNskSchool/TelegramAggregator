@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using CommunicationModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using VkConnector.Model;
 using VkConnector.Services;
@@ -30,13 +31,13 @@ namespace VkConnector.Controllers
                 return BadRequest(new ResponseResult
                 {
                     IsOk = false,
-                    Description = string.Join("\r\n",
+                    Description = string.Join(
+                        "\r\n",
                         ModelState.Values.SelectMany(entry => entry.Errors).Select(error => error.ErrorMessage))
                 });
             }
 
-            _updatesListener.StartListening(subscriptionModel);
-
+            await _updatesListener.StartListening(subscriptionModel);
             return Ok(new ResponseResult
             {
                 IsOk = true,

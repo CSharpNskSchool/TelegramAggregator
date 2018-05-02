@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using VkConnector.Model;
+﻿using CommunicationModels.Models;
+using System.Threading.Tasks;
 
 namespace VkConnector.Services
 {

@@ -1,6 +1,5 @@
-﻿using System;
+﻿using CommunicationModels.Models;
 using System.Threading.Tasks;
-using VkConnector.Model.Messages;
 using VkNet;
 using VkNet.Model.RequestParams;
 
@@ -13,11 +12,12 @@ namespace VkConnector.Extensions
             var api = new VkApi();
             await api.CheckedAuthorizeAsync(transmittedMessage.AuthorizedSender.AccessToken);
 
-            var messageSendParams = transmittedMessage.GetMessageSendParams(transmittedMessage.Receiver.Id);
+            var messageSendParams = transmittedMessage.GetMessageSendParams(transmittedMessage.Message.Receiver.Id);
             await api.Messages.SendAsync(messageSendParams);
         }
 
-        private static MessagesSendParams GetMessageSendParams(this TransmittedMessage transmittedMessage,
+        private static MessagesSendParams GetMessageSendParams(
+            this TransmittedMessage transmittedMessage,
             long receiver)
         {
             var result = new MessagesSendParams
@@ -25,9 +25,9 @@ namespace VkConnector.Extensions
                 PeerId = receiver
             };
 
-            if (transmittedMessage.Body.Text != null)
+            if (transmittedMessage.Message.Body.Text != null)
             {
-                result.Message = transmittedMessage.Body.Text;
+                result.Message = transmittedMessage.Message.Body.Text;
             }
 
             // TODO: для Atachments заполняем соответвующие поля

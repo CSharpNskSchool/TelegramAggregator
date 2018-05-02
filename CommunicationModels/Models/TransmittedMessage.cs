@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using VkConnector.Model.Users;
 
-namespace VkConnector.Model.Messages
+namespace CommunicationModels.Models
 {
     /// <summary>
     ///     Передаваемое от пользователя соц. сети сообщение
@@ -15,16 +14,9 @@ namespace VkConnector.Model.Messages
         public AuthorizedUser AuthorizedSender { get; set; }
 
         /// <summary>
-        ///     Получатели сообщения
+        ///     Содержимое сообщения
         /// </summary>
-        [Required(ErrorMessage = "Не указан получатель")]
-        public ExternalUser Receiver { get; set; }
-
-
-        /// <summary>
-        ///     Тело сообщения
-        /// </summary>
-        [Required(ErrorMessage = "Нету тела сообщения")]
-        public MessageBody Body { get; set; }
+        [Required(ErrorMessage = "Сообщение должно быть определено")]
+        public Message Message { get; set; }
     }
 }

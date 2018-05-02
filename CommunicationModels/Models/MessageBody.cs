@@ -1,4 +1,4 @@
-﻿namespace VkConnector.Model.Messages
+﻿namespace CommunicationModels.Models
 {
     /// <summary>
     ///     Тело сообщения

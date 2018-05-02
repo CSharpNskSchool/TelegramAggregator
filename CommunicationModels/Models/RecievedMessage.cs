@@ -1,6 +1,4 @@
-﻿using VkConnector.Model.Users;
-
-namespace VkConnector.Model.Messages
+﻿namespace CommunicationModels.Models
 {
     /// <summary>
     ///     Получаемое пользователем сообщение
@@ -19,12 +17,12 @@ namespace VkConnector.Model.Messages
         ///     Отправитель (челик из соц.сети).
         /// </summary>
         public ExternalUser Sender { get; }
-        
+
         /// <summary>
         ///     Идентификатор беседы. Для личных переписок -1
         /// </summary>
         public long ChatId { get; }
-        
+
         /// <summary>
         ///    true - полученное, false - отправленное
         /// </summary>

@@ -1,10 +1,7 @@
 ﻿using System;
-using VkConnector.Model.Users;
 
-namespace VkConnector.Model
+namespace CommunicationModels.Models
 {
-    /// <summary>
-    /// </summary>
     [Serializable]
     public class SubscriptionModel
     {
@@ -12,6 +9,11 @@ namespace VkConnector.Model
         ///     Url, на который будут приходить уведомления о новых сообщениях
         /// </summary>
         public Uri Url { get; set; }
+
+        /// <summary>
+        ///     Токен, для определения пользователя, подписываемого на уводомления
+        /// </summary>
+        public string UserToken { get; set; }
 
         /// <summary>
         ///     Информация для авторизации

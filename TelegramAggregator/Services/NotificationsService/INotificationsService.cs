@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using CommunicationModels.Models;
+using System.Threading.Tasks;
 using TelegramAggregator.Data.Entities;
-using VkConnector.Model.Messages;
 
 namespace TelegramAggregator.Services.NotificationsService
 {

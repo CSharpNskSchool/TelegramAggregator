@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace VkConnector.Model.Users
+namespace CommunicationModels.Models
 {
     /// <summary>
     ///     Информация, необходимая для аутентификации

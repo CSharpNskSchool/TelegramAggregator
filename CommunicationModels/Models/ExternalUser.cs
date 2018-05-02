@@ -1,4 +1,4 @@
-﻿namespace VkConnector.Model.Users
+﻿namespace CommunicationModels.Models
 {
     /// <summary>
     ///     Пользователь соц.сети, с которым пользователь бота хочет взаимодействовать.

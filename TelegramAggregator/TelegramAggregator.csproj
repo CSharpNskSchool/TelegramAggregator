@@ -18,17 +18,11 @@
     <PackageReference Include="VkNet" Version="1.33.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationModels\CommunicationModels.csproj" />
     <ProjectReference Include="..\TelegramAggregator.Data\TelegramAggregator.Data.csproj">
       <Project>{ABE946E2-EDE6-4DD4-BC71-4D8EF21794B7}</Project>
       <Name>TelegramAggregator.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VkConnector.Client\VkConnector.Client.csproj">
-      <Project>{DCD9309E-1FA1-4213-83E8-9A2F98584C83}</Project>
-      <Name>VkConnector.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VkConnector\VkConnector.csproj">
-      <Project>{A5DF37C1-07B8-4507-98E3-F93958F9CD90}</Project>
-      <Name>VkConnector</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\VkConnector.Client\Connectors.Client.csproj" />
   </ItemGroup>
 </Project>

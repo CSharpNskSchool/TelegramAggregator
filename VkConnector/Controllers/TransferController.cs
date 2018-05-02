@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunicationModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using VkConnector.Extensions;
 using VkConnector.Model;
-using VkConnector.Model.Messages;
 
 namespace VkConnector.Controllers
 {
@@ -25,7 +25,8 @@ namespace VkConnector.Controllers
                 return BadRequest(new ResponseResult
                 {
                     IsOk = false,
-                    Description = string.Join("\r\n",
+                    Description = string.Join(
+                        "\r\n",
                         ModelState.Values.SelectMany(entry => entry.Errors).Select(error => error.ErrorMessage))
                 });
             }
@@ -33,6 +34,11 @@ namespace VkConnector.Controllers
             try
             {
                 await transmittedMessage.Transfer();
+                return Ok(new ResponseResult
+                {
+                    IsOk = true,
+                    Description = "Сообщение отправлено"
+                });
             }
             catch (Exception e)
             {
@@ -42,9 +48,6 @@ namespace VkConnector.Controllers
                     Description = e.Message
                 });
             }
-
-
-            return Ok(new ResponseResult {IsOk = true, Description = "Сообщение отправлено"});
         }
     }
 }

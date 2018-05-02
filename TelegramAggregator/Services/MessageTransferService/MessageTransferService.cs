@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Telegram.Bot.Types;
+﻿using CommunicationModels.Models;
+using System.Threading.Tasks;
 using TelegramAggregator.Data.Entities;
 using VkConnector.Client;
-using VkConnector.Model.Messages;
-using VkConnector.Model.Users;
 
 namespace TelegramAggregator.Services.MessageTransferService
 {
@@ -16,10 +14,9 @@ namespace TelegramAggregator.Services.MessageTransferService
             _botService = botService;
         }
 
-
-        public async Task Transfer(BotUser botUser, Message message)
+        public async Task Transfer(BotUser botUser, Telegram.Bot.Types.Message message)
         {
-            var connector = new VkConnectorClient("http://localhost:5000");
+            var connector = new ConnectorsClient("http://localhost:5000");
             
             await connector.SendMessage(new TransmittedMessage()
             {
@@ -27,8 +24,11 @@ namespace TelegramAggregator.Services.MessageTransferService
                 {
                     AccessToken = botUser.VkAccount.AcessToken
                 },
-                Body = new MessageBody(message.Text),
-                Receiver = new ExternalUser(botUser.VkAccount.CurrentPeer)
+                Message = new Message()
+                {
+                    Body = new MessageBody(message.Text),
+                    Receiver = new ExternalUser(botUser.VkAccount.CurrentPeer)
+                }
             });
         }
     }

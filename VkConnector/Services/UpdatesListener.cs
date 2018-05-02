@@ -2,11 +2,9 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CommunicationModels.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using VkConnector.Model;
-using VkConnector.Model.Messages;
-using VkConnector.Model.Users;
 using VkNet;
 using VkNet.Model.RequestParams;
 
@@ -26,7 +24,7 @@ namespace VkConnector.Services
                 AccessToken = subscriptionModel.User.AccessToken
             });
 
-            Task.Factory.StartNew(async () => { await NotifyNewUpdates(subscriptionModel, api); });
+            Task.Factory.StartNew(async () => await NotifyNewUpdates(subscriptionModel, api));
         }
 
         public void StopListening(SubscriptionModel subscriptionModel)
@@ -55,7 +53,8 @@ namespace VkConnector.Services
 
                 foreach (var message in longPollHistory.Messages)
                 {
-                    SendToWebHook(subscriptionModel.Url,
+                    SendToWebHook(
+                        subscriptionModel.Url,
                         new RecievedMessage(
                             message.ChatId ?? -1,
                             new ExternalUser(message.UserId ?? -1),
@@ -69,10 +68,11 @@ namespace VkConnector.Services
 
         private void SendToWebHook(Uri url, RecievedMessage message)
         {
-            Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Body.Text} \r\n\r\n");
             var client = new HttpClient();
             var toSend = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json");
             var a = client.PostAsync(url, toSend);
+
+            Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Body.Text} \r\n\r\n");
             Console.WriteLine(url);
             Console.WriteLine($"Код ответа: {a.Result.StatusCode}");
         }

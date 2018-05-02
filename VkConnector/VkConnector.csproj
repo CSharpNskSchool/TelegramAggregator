@@ -9,6 +9,9 @@
     <DocumentationFile>bin\Release\netcoreapp2.0\VkConnector.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Model\SubscriptionModel.cs~RF51e0e44.TMP" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
@@ -18,5 +21,8 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommunicationModels\CommunicationModels.csproj" />
   </ItemGroup>
 </Project>
