@@ -3,18 +3,178 @@
   <component name="ContentModelStore">
     <e p="C:\Users\banyr\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_TelegramAggregator.1010530778.00" t="ExcludeRecursive" />
     <e p="D:\Documents\SKB_KONTUR\TelegramAggregator" t="IncludeFlat">
-      <e p="packages" t="ExcludeRecursive" />
-      <e p="TelegramAggregator" t="IncludeRecursive">
+      <e p="CommunicationModels" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="CommunicationModels.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="Account.cs" t="Include" />
+          <e p="AggregatorMessage.cs" t="Include" />
+          <e p="AuthorizedUser.cs" t="Include" />
+          <e p="ExternalUser.cs" t="Include" />
+          <e p="Message.cs" t="Include" />
+          <e p="MessageBody.cs" t="Include" />
+          <e p="RecievedMessage.cs" t="Include" />
+          <e p="SubscriptionModel.cs" t="Include" />
+          <e p="TransmittedMessage.cs" t="Include" />
+          <e p="UserData.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="CommunicationModels.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="MessagesTransferApi" t="IncludeRecursive">
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="BotConfiguration.cs" t="Include" />
+        <e p="Controllers" t="Include">
+          <e p="AggregatorController.cs" t="Include" />
+          <e p="ConnectorController.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="ServiceProviderExtensions.cs" t="Include" />
+        </e>
+        <e p="MessagesTransferApi.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="ConnectorData.cs" t="Include" />
+          <e p="ConnectorMessage.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MessagesTransferApi.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="wwwroot" t="Include" />
+      </e>
+      <e p="MessagesTransferApi.Data" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Contexts" t="Include">
+          <e p="DataContext.cs" t="Include" />
+        </e>
+        <e p="MessagesTransferApi.Data.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="Connector.cs" t="Include" />
+          <e p="NetworkAuthData.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MessagesTransferApi.Data.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="MessagesTransferApi.Logic" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="HttpSender.cs" t="Include" />
+        <e p="MessagesTransferApi.Logic.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="MessagesTransferApi.Logic.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="workWithAggregator" t="Include">
+          <e p="DirectAggregatorSenderService.cs" t="Include" />
+          <e p="GuidTokenGeneratorService.cs" t="Include" />
+          <e p="IAggregatorSenderService.cs" t="Include" />
+          <e p="ITokenGeneratorService.cs" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="TelegramAggregator" t="IncludeRecursive">
+        <e p="AggregatorBot.cs" t="Include" />
+        <e p="AggregatorBotConfiguration.cs" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="NotificationsController.cs" t="Include" />
-          <e p="UpdateController.cs" t="Include" />
         </e>
-        <e p="Extentions" t="Include">
-          <e p="BotUserExtentions.cs" t="Include" />
+        <e p="Controls" t="Include">
+          <e p="AuthControl" t="Include">
+            <e p="AuthControlExtensions.cs" t="Include" />
+            <e p="Common" t="Include">
+              <e p="Constants.cs" t="Include" />
+            </e>
+            <e p="Handlers" t="Include">
+              <e p="Commands" t="Include">
+                <e p="AuthCommand.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="CalendarControl" t="Include">
+            <e p="CalendarControlExtensions.cs" t="Include" />
+            <e p="CallbackCommandExtensions.cs" t="Include" />
+            <e p="Common" t="Include">
+              <e p="Constants.cs" t="Include" />
+              <e p="Markup.cs" t="Include" />
+              <e p="Row.cs" t="Include" />
+            </e>
+            <e p="Handlers" t="Include">
+              <e p="Calendar" t="Include">
+                <e p="ChangeToHandler.cs" t="Include" />
+                <e p="PickDateHandler.cs" t="Include" />
+              </e>
+              <e p="Commands" t="Include">
+                <e p="CalendarCommand.cs" t="Include" />
+              </e>
+              <e p="MonthYear" t="Include">
+                <e p="MonthPickerHandler.cs" t="Include" />
+                <e p="YearMonthPickerHandlercs.cs" t="Include" />
+                <e p="YearPickerHandler.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Services" t="Include">
+              <e p="LocalizationService.cs" t="Include" />
+            </e>
+          </e>
+          <e p="DialogsControl" t="Include">
+            <e p="CallbackCommandExtensions.cs" t="Include" />
+            <e p="Common" t="Include">
+              <e p="Constants.cs" t="Include" />
+              <e p="Markup.cs" t="Include" />
+              <e p="Row.cs" t="Include" />
+            </e>
+            <e p="DialogsControlExtensions.cs" t="Include" />
+            <e p="Handlers" t="Include">
+              <e p="Commands" t="Include">
+                <e p="DialogsCommand.cs" t="Include" />
+              </e>
+              <e p="Dialogs" t="Include">
+                <e p="PickDialogHandler.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="MessagesControl" t="Include">
+            <e p="MessagesHandler.cs" t="Include" />
+          </e>
+          <e p="MessagingControl" t="Include" />
+        </e>
+        <e p="Model" t="Include">
+          <e p="Entities" t="Include">
+            <e p="BotUser.cs" t="Include" />
+            <e p="VkAccount.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="BotUserExtensions.cs" t="Include" />
+            <e p="VkApiExtensions.cs" t="Include" />
+          </e>
+          <e p="Repositories" t="Include">
+            <e p="BotUserRepository.cs" t="Include" />
+            <e p="IBotUserRepository.cs" t="Include" />
+          </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -27,51 +187,8 @@
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
-        <e p="Services" t="Include">
-          <e p="BotCommands" t="Include">
-            <e p="BotCommandLogin.cs" t="Include" />
-            <e p="BotCommandSetPeer.cs" t="Include" />
-            <e p="BotCommandWhoAmI.cs" t="Include" />
-            <e p="IBotCommand.cs" t="Include" />
-          </e>
-          <e p="BotService.cs" t="Include" />
-          <e p="CommandsHandler" t="Include">
-            <e p="CommandsHandler.cs" t="Include" />
-            <e p="ICommandsHandler.cs" t="Include" />
-          </e>
-          <e p="IBotService.cs" t="Include" />
-          <e p="IUpdateService.cs" t="Include" />
-          <e p="MessageTransferService" t="Include">
-            <e p="IMessageTransferService.cs" t="Include" />
-            <e p="MessageTransferService.cs" t="Include" />
-          </e>
-          <e p="NotificationsService" t="Include">
-            <e p="INotificationsService.cs" t="Include" />
-            <e p="NotificationsService.cs" t="Include" />
-          </e>
-          <e p="UpdateService.cs" t="Include" />
-        </e>
         <e p="Startup.cs" t="Include" />
         <e p="TelegramAggregator.csproj" t="IncludeRecursive" />
-      </e>
-      <e p="TelegramAggregator.Data" t="IncludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="Entities" t="Include">
-          <e p="BotUser.cs" t="Include" />
-          <e p="VkAccount.cs" t="Include" />
-        </e>
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp2.0" t="Include">
-              <e p="TelegramAggregator.Data.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-        <e p="Repositories" t="Include">
-          <e p="BotUserRepository.cs" t="Include" />
-          <e p="IBotUserRepository.cs" t="Include" />
-        </e>
-        <e p="TelegramAggregator.Data.csproj" t="IncludeRecursive" />
       </e>
       <e p="TelegramAggregator.sln" t="IncludeFlat" />
       <e p="VkConnector" t="IncludeRecursive">
@@ -87,17 +204,7 @@
           <e p="VkApiExtensions.cs" t="Include" />
         </e>
         <e p="Model" t="Include">
-          <e p="Messages" t="Include">
-            <e p="MessageBody.cs" t="Include" />
-            <e p="RecievedMessage.cs" t="Include" />
-            <e p="TransmittedMessage.cs" t="Include" />
-          </e>
           <e p="ResponseResult.cs" t="Include" />
-          <e p="SubscriptionModel.cs" t="Include" />
-          <e p="Users" t="Include">
-            <e p="AuthorizedUser.cs" t="Include" />
-            <e p="ExternalUser.cs" t="Include" />
-          </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -120,16 +227,19 @@
       </e>
       <e p="VkConnector.Client" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
-        <e p="IVkConnectorClient.cs" t="Include" />
+        <e p="Connectors.Client.csproj" t="IncludeRecursive" />
+        <e p="ConnectorsClient.cs" t="Include" />
+        <e p="IConnectorsClient.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.0" t="Include">
-              <e p="VkConnector.Client.AssemblyInfo.cs" t="Include" />
+              <e p="Connectors.Client.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
-        <e p="VkConnector.Client.csproj" t="IncludeRecursive" />
-        <e p="VkConnectorClient.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
       </e>
     </e>
   </component>
