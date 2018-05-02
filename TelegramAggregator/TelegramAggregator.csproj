@@ -3,15 +3,26 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\TelegramAggregator.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DocumentationFile>bin\Release\netcoreapp2.0\TelegramAggregator.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="2.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="2.4.0" />
     <PackageReference Include="Telegram.Bot" Version="14.2.0-rc-452" />
-    <PackageReference Include="VkNet" Version="1.32.0" />
+    <PackageReference Include="VkNet" Version="1.33.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationModels\CommunicationModels.csproj" />
     <ProjectReference Include="..\TelegramAggregator.Data\TelegramAggregator.Data.csproj">
       <Project>{ABE946E2-EDE6-4DD4-BC71-4D8EF21794B7}</Project>
       <Name>TelegramAggregator.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VkConnector.Client\Connectors.Client.csproj" />
   </ItemGroup>
 </Project>

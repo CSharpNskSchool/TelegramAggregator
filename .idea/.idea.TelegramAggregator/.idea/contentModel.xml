@@ -10,9 +10,9 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="BotConfiguration.cs" t="Include" />
         <e p="Controllers" t="Include">
+          <e p="NotificationsController.cs" t="Include" />
           <e p="UpdateController.cs" t="Include" />
         </e>
-        <e p="devnull.png" t="Include" />
         <e p="Extentions" t="Include">
           <e p="BotUserExtentions.cs" t="Include" />
         </e>
@@ -41,13 +41,13 @@
           </e>
           <e p="IBotService.cs" t="Include" />
           <e p="IUpdateService.cs" t="Include" />
-          <e p="MessagesNotify" t="Include">
-            <e p="IMessageNotify.cs" t="Include" />
-            <e p="MessageNotify.cs" t="Include" />
+          <e p="MessageTransferService" t="Include">
+            <e p="IMessageTransferService.cs" t="Include" />
+            <e p="MessageTransferService.cs" t="Include" />
           </e>
-          <e p="MessagesTrasfer" t="Include">
-            <e p="IMessageTransfer.cs" t="Include" />
-            <e p="VkNativeMessageTransfer.cs" t="Include" />
+          <e p="NotificationsService" t="Include">
+            <e p="INotificationsService.cs" t="Include" />
+            <e p="NotificationsService.cs" t="Include" />
           </e>
           <e p="UpdateService.cs" t="Include" />
         </e>
@@ -74,6 +74,63 @@
         <e p="TelegramAggregator.Data.csproj" t="IncludeRecursive" />
       </e>
       <e p="TelegramAggregator.sln" t="IncludeFlat" />
+      <e p="VkConnector" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="SubscribeController.cs" t="Include" />
+          <e p="TransferController.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="TransmittedMessageExtensions.cs" t="Include" />
+          <e p="VkApiExtensions.cs" t="Include" />
+        </e>
+        <e p="Model" t="Include">
+          <e p="Messages" t="Include">
+            <e p="MessageBody.cs" t="Include" />
+            <e p="RecievedMessage.cs" t="Include" />
+            <e p="TransmittedMessage.cs" t="Include" />
+          </e>
+          <e p="ResponseResult.cs" t="Include" />
+          <e p="SubscriptionModel.cs" t="Include" />
+          <e p="Users" t="Include">
+            <e p="AuthorizedUser.cs" t="Include" />
+            <e p="ExternalUser.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="VkConnector.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="IUpdatesListener.cs" t="Include" />
+          <e p="UpdatesListener.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="VkConnector.csproj" t="IncludeRecursive" />
+        <e p="wwwroot" t="Include" />
+      </e>
+      <e p="VkConnector.Client" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="IVkConnectorClient.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.0" t="Include">
+              <e p="VkConnector.Client.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="VkConnector.Client.csproj" t="IncludeRecursive" />
+        <e p="VkConnectorClient.cs" t="Include" />
+      </e>
     </e>
   </component>
 </project>

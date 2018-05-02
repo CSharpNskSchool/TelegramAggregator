@@ -2,9 +2,9 @@
 using Telegram.Bot.Types;
 using TelegramAggregator.Data.Entities;
 
-namespace TelegramAggregator.Services.MessagesTrasfer
+namespace TelegramAggregator.Services.MessageTransferService
 {
-    public interface IMessageTransfer
+    public interface IMessageTransferService
     {
         Task Transfer(BotUser botUser, Message message);
     }

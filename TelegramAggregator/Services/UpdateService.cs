@@ -6,7 +6,7 @@ using TelegramAggregator.Data.Entities;
 using TelegramAggregator.Data.Repositories;
 using TelegramAggregator.Services.BotCommands;
 using TelegramAggregator.Services.CommandsHandler;
-using TelegramAggregator.Services.MessagesTrasfer;
+using TelegramAggregator.Services.MessageTransferService;
 
 namespace TelegramAggregator.Services
 {
@@ -14,20 +14,20 @@ namespace TelegramAggregator.Services
     {
         private readonly IBotService _botService;
         private readonly IBotUserRepository _botUserRepository;
-        private readonly IMessageTransfer _messageTransfer;
+        private readonly IMessageTransferService _messageTransferService;
         private readonly ICommandsHandler _commandsHandler;
         private readonly ILogger<UpdateService> _logger;
 
         public UpdateService(
             IBotService botService, 
             IBotUserRepository botUserRepository,
-            IMessageTransfer messageTransfer,
+            IMessageTransferService messageTransferService,
             ICommandsHandler commandsHandler,
             ILogger<UpdateService> logger)
         {
             _botService = botService;
             _botUserRepository = botUserRepository;
-            _messageTransfer = messageTransfer;
+            _messageTransferService = messageTransferService;
             _commandsHandler = commandsHandler;
             _logger = logger;
         }
@@ -41,15 +41,15 @@ namespace TelegramAggregator.Services
 
                 if (message.Type == MessageType.Text && message.Text.StartsWith("/"))
                 {
-                    _logger.LogInformation($"Получена команда из диалога {message.Chat.Id}");
+                    _logger.LogInformation($"Получена команда из диалога {message.Chat.Id}: {message.Text}");
 
                     await _commandsHandler.Transfer(botUser, message);
                 }
                 else
                 {
-                    _logger.LogInformation($"Получено сообщение из диалога {message.Chat.Id}");
+                    _logger.LogInformation($"Получено сообщение из диалога {message.Chat.Id}: {message.Text}");
 
-                    await _messageTransfer.Transfer(botUser, message);
+                    await _messageTransferService.Transfer(botUser, message);
                 }
             }
         }
