@@ -5,6 +5,7 @@ using MessagesTransferApi.Logic;
 using MessagesTransferApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CommunicationModels.Models;
 
 namespace MessagesTransferApi.Controllers
 {
@@ -61,12 +62,11 @@ namespace MessagesTransferApi.Controllers
         /// </summary>
         /// <param name="messageData">данные для отправки</param>
         /// <param name="networkName">название соц.сети</param>
-        /// <param name="id">id получателя (хз что и зачем) </param>
+        /// <param name="id">id получателя </param>
         /// <returns></returns>
         [HttpPost]
-        [Route("Messages{id:int}")]
-        public async Task<IActionResult> SendMessage([FromBody] ConnectorMessage messageData,
-            [FromQuery] string networkName, int id)
+        [Route("Messages/{id:int}")]
+        public async Task<IActionResult> SendMessage([FromBody] RecievedMessage message, [FromQuery] string networkName, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest("Неверный токен");
             }
 
-            _aggregatorSender.SendMessage(user, messageData.Message);
+            _aggregatorSender.SendMessage(user, message);
             return Ok();
         }
     }

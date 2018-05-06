@@ -159,14 +159,14 @@ namespace MessagesTransferApi.Controllers
             };
 
             await new ConnectorsClient(connector.Url)
-                .SetWebHook(new SubscriptionModel
-                {
-                    Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}"),
-                    User = new AuthorizedUser
+                    .SetWebHook(new SubscriptionModel()
                     {
-                        AccessToken = account.AccessToken
-                    }
-                });
+                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
+                        User = new AuthorizedUser()
+                        {
+                            AccessToken = account.AccessToken
+                        }
+                    });
 
             user.Accounts.Add(networkAuthData);
             await _context.SaveChangesAsync();

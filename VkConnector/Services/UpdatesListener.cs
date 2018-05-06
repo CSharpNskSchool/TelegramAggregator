@@ -27,7 +27,7 @@ namespace VkConnector.Services
             Task.Factory.StartNew(async () => await NotifyNewUpdates(subscriptionModel, api));
         }
 
-        public void StopListening(SubscriptionModel subscriptionModel)
+        public bool StopListening(SubscriptionModel subscriptionModel)
         {
             throw new NotImplementedException();
         }
@@ -56,10 +56,10 @@ namespace VkConnector.Services
                     SendToWebHook(
                         subscriptionModel.Url,
                         new RecievedMessage(
-                            message.ChatId ?? -1,
-                            new ExternalUser(message.UserId ?? -1),
-                            !message.Out ?? false,
-                            new MessageBody(message.Body)));
+                            chatId: message.ChatId ?? -1,
+                            sender: new ExternalUser(message.UserId ?? -1),
+                            isIncoming: !message.Out ?? false,
+                            body: new MessageBody(message.Body)));
                 }
 
                 ts = updates["ts"].ToObject<ulong>();
@@ -70,6 +70,7 @@ namespace VkConnector.Services
         {
             var client = new HttpClient();
             var toSend = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json");
+
             var a = client.PostAsync(url, toSend);
 
             Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Body.Text} \r\n\r\n");
