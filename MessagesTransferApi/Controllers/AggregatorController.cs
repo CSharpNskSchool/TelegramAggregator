@@ -155,7 +155,7 @@ namespace MessagesTransferApi.Controllers
             await new ConnectorsClient(connector.Url)
                     .SetWebHook(new SubscriptionModel()
                     {
-                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}"),
+                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
                         User = new AuthorizedUser()
                         {
                             AccessToken = account.AccessToken
