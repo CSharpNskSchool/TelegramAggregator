@@ -7,6 +7,6 @@ namespace VkConnector.Services
     {
         Task StartListening(SubscriptionModel subscriptionModel);
 
-        void StopListening(SubscriptionModel subscriptionModel);
+        bool StopListening(SubscriptionModel subscriptionModel);
     }
 }
