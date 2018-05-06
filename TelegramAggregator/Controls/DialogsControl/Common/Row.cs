@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramAggregator.Model.Extensions;
 using VkNet;
@@ -14,10 +13,10 @@ namespace TelegramAggregator.Controls.DialogsControl.Common
         {
             const int vkChatsStartId = 2000000000;
             const int dialogsPerPage = 8;
-            
-            var dialogs = api.Messages.GetDialogs(new MessagesDialogsGetParams()
+
+            var dialogs = api.Messages.GetDialogs(new MessagesDialogsGetParams
             {
-                Count = dialogsPerPage,
+                Count = dialogsPerPage
             });
 
             foreach (var message in dialogs.Messages)
@@ -35,10 +34,13 @@ namespace TelegramAggregator.Controls.DialogsControl.Common
                 }
                 else if (message.UserId.HasValue)
                 {
-//                    var peer = api.GetUserById(message.UserId.Value);
-                    
+                    // TODO: переделать этот метод.
+                    // Получать информацию сразу о всех пользователях,
+                    // чтобы сократить обращения к vk-api
+                    var peer = api.GetUserById(message.UserId.Value);
+
                     yield return InlineKeyboardButton.WithCallbackData(
-                        $"id{message.UserId}: {message.Body}",
+                        $"{peer.FirstName} {peer.LastName}: {message.Body}",
                         $"{Constants.PickDialog}{message.UserId}");
                 }
             }

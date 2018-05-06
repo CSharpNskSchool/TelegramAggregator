@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using CommunicationModels.Models;
 using MessagesTransferApi.Data.Contexts;
-using MessagesTransferApi.Logic;
 using MessagesTransferApi.Data.Models;
+using MessagesTransferApi.Logic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VkConnector.Client;
-using System;
-using CommunicationModels.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace MessagesTransferApi.Controllers
 {
@@ -26,9 +26,9 @@ namespace MessagesTransferApi.Controllers
             ITokenGeneratorService tokenGenerator,
             IHttpContextAccessor httpContextAccessor)
         {
-            this._context = context;
-            this._tokenGenerator = tokenGenerator;
-            this.request = httpContextAccessor.HttpContext.Request;
+            _context = context;
+            _tokenGenerator = tokenGenerator;
+            request = httpContextAccessor.HttpContext.Request;
         }
 
         /// <summary>
@@ -37,18 +37,24 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Users")]
-        public IActionResult GetUsers() => Json(_context.Users);
+        public IActionResult GetUsers()
+        {
+            return Json(_context.Users);
+        }
 
         /// <summary>
-        /// Получить все аккаунты
+        ///     Получить все аккаунты
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("Accounts")]
-        public IActionResult GetAccounts() => Json(_context.Accounts);
+        public IActionResult GetAccounts()
+        {
+            return Json(_context.Accounts);
+        }
 
         /// <summary>
-        /// Добавить пользователя
+        ///     Добавить пользователя
         /// </summary>
         /// <param name="userData"> данные о пользователе </param>
         /// <returns></returns>
@@ -70,9 +76,9 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest("Логин уже существует");
             }
 
-            string userToken = _tokenGenerator.GenerateToken(userData.Login);
+            var userToken = _tokenGenerator.GenerateToken(userData.Login);
 
-            User user = new User()
+            var user = new User
             {
                 Login = userData.Login,
                 FeedbackUrl = userData.Url,
@@ -82,7 +88,7 @@ namespace MessagesTransferApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Json(new { generatedToken = userToken });
+            return Json(new {generatedToken = userToken});
         }
 
 
@@ -95,7 +101,7 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = await _context
+            var user = await _context
                 .Users
                 .FirstOrDefaultAsync(u => u.UserToken == userToken);
 
@@ -111,7 +117,7 @@ namespace MessagesTransferApi.Controllers
         }
 
         /// <summary>
-        /// Подписаться на обновления
+        ///     Подписаться на обновления
         /// </summary>
         /// <param name="account">данные из соц.сети (как я понял)</param>
         /// <param name="userToken">токен выделенный при добавлении пользователя</param>
@@ -125,7 +131,7 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = await _context
+            var user = await _context
                 .Users
                 .Include(u => u.Accounts)
                 .FirstOrDefaultAsync(u => u.UserToken == userToken);
@@ -144,23 +150,23 @@ namespace MessagesTransferApi.Controllers
                 return NotFound("Не существует запрашиваемой социальной сети");
             }
 
-            var networkAuthData = new NetworkAuthData()
+            var networkAuthData = new NetworkAuthData
             {
                 UserId = user.Id,
                 User = user,
                 PlatformName = account.NetworkName,
                 AccessToken = account.AccessToken
             };
-            
+
             await new ConnectorsClient(connector.Url)
-                    .SetWebHook(new SubscriptionModel()
+                .SetWebHook(new SubscriptionModel
+                {
+                    Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}"),
+                    User = new AuthorizedUser
                     {
-                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}"),
-                        User = new AuthorizedUser()
-                        {
-                            AccessToken = account.AccessToken
-                        }
-                    });
+                        AccessToken = account.AccessToken
+                    }
+                });
 
             user.Accounts.Add(networkAuthData);
             await _context.SaveChangesAsync();
@@ -169,21 +175,22 @@ namespace MessagesTransferApi.Controllers
         }
 
         /// <summary>
-        /// Отправка сообщения в коннектор
+        ///     Отправка сообщения в коннектор
         /// </summary>
         /// <param name="transmittedData"> данные для пересылки </param>
         /// <param name="userToken">пользовательский токен</param>
         /// <returns></returns>
         [HttpPost]
         [Route("Messages")]
-        public async Task<IActionResult> SendMessage([FromBody] AggregatorMessage transmittedData, [FromQuery] string userToken)
+        public async Task<IActionResult> SendMessage([FromBody] AggregatorMessage transmittedData,
+            [FromQuery] string userToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            User user = await _context
+            var user = await _context
                 .Users
                 .Include(u => u.Accounts)
                 .FirstOrDefaultAsync(u => u.UserToken == userToken);
@@ -193,7 +200,7 @@ namespace MessagesTransferApi.Controllers
                 return NotFound("Неверный токен");
             }
 
-            string accessToken = user
+            var accessToken = user
                 .Accounts
                 .FirstOrDefault(a => a.PlatformName == transmittedData.NetworkName)
                 .AccessToken;
@@ -203,13 +210,13 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest("Для данной сети токен даступа не найден");
             }
 
-            Connector connector = await _context
+            var connector = await _context
                 .Connectors
                 .FirstOrDefaultAsync(c => c.NetworkName == transmittedData.NetworkName);
 
-            await new ConnectorsClient(connector.Url).SendMessage(new TransmittedMessage()
+            await new ConnectorsClient(connector.Url).SendMessage(new TransmittedMessage
             {
-                AuthorizedSender = new AuthorizedUser() { AccessToken = accessToken },
+                AuthorizedSender = new AuthorizedUser {AccessToken = accessToken},
                 Message = transmittedData.Message
             });
 

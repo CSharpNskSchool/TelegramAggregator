@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MessagesTransferApi.Logic
+﻿namespace MessagesTransferApi.Logic
 {
     public interface ITokenGeneratorService
     {

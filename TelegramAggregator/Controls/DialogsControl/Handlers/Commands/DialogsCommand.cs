@@ -17,7 +17,7 @@ namespace TelegramAggregator.Controls.DialogsControl.Handlers.Commands
     public class DialogsCommand : CommandBase<DialogsCommandArgs>
     {
         private readonly IBotUserRepository _botUserRepository;
-        
+
         public DialogsCommand(IBotUserRepository botUserRepository)
             : base(Constants.Command)
         {
@@ -29,11 +29,11 @@ namespace TelegramAggregator.Controls.DialogsControl.Handlers.Commands
         {
             var botUser = _botUserRepository.GetByTelegramId(update.Message.Chat.Id);
             var api = new VkApi();
-            await api.AuthorizeAsync(new ApiAuthParams()
+            await api.AuthorizeAsync(new ApiAuthParams
             {
                 AccessToken = botUser.VkAccount.AcessToken
             });
-            
+
             var dialogsMarkup = Markup.Dialogs(api);
 
             await bot.Client.SendTextMessageAsync(

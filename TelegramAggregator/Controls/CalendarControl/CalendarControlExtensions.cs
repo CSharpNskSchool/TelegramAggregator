@@ -9,8 +9,9 @@ namespace TelegramAggregator.Controls.CalendarControl
 {
     public static class CalendarControlExtensions
     {
-        public static TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder<TBot> AddCalendarHandlers<TBot>(
-            this TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder<TBot> botBuilder)
+        public static TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder<TBot>
+            AddCalendarHandlers<TBot>(
+                this TelegramBotFrameworkIServiceCollectionExtensions.ITelegramBotFrameworkBuilder<TBot> botBuilder)
             where TBot : BotBase<TBot>
         {
             return botBuilder

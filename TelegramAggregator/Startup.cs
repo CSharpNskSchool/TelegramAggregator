@@ -14,6 +14,7 @@ using TelegramAggregator.Controls.CalendarControl;
 using TelegramAggregator.Controls.DialogsControl;
 using TelegramAggregator.Controls.MessagesControl;
 using TelegramAggregator.Model.Repositories;
+using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator
 {
@@ -35,7 +36,7 @@ namespace TelegramAggregator
         {
             services.AddMvc();
 
-            services.AddTelegramBot<AggregatorBot>(_configuration.GetSection("CalendarBot"))
+            services.AddTelegramBot<AggregatorBot>(_configuration.GetSection("AggregatorBot"))
                 .AddCalendarHandlers()
                 .AddDialogsHandlers()
                 .AddAuthHandlers()
@@ -46,10 +47,11 @@ namespace TelegramAggregator
 
             // Add bot configuration
             services.AddSingleton(_configuration
-                .GetSection("CalendarBot")
+                .GetSection("AggregatorBot")
                 .Get<AggregatorBotConfiguration>());
-            
+
             services.AddScoped<IBotUserRepository, BotUserRepository>();
+            services.AddScoped<INotificationsService, NotificationsService>();
 
             services.AddSwaggerGen(c =>
             {

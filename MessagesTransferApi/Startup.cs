@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MessagesTransferApi.Data.Contexts;
+using MessagesTransferApi.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MessagesTransferApi.Data.Contexts;
-using Microsoft.EntityFrameworkCore;
-using MessagesTransferApi.Extensions;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MessagesTransferApi
@@ -22,7 +22,7 @@ namespace MessagesTransferApi
         {
             services.AddTokenGeneratorService();
             services.AddAggregatorSenderService();
-            
+
             services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("MessagesTransferData"));
             services.AddMvc();
 

@@ -1,5 +1,5 @@
-﻿using CommunicationModels.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using CommunicationModels.Models;
 
 namespace MessagesTransferApi.Models
 {

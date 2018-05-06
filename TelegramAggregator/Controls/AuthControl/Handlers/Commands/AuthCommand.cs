@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Framework;
 using Telegram.Bot.Types;
@@ -7,8 +6,7 @@ using TelegramAggregator.Controls.AuthControl.Common;
 using TelegramAggregator.Model.Entities;
 using TelegramAggregator.Model.Extensions;
 using TelegramAggregator.Model.Repositories;
-using VkNet;
-using VkNet.Enums.Filters;
+using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator.DialogsControl.Handlers.Commands
 {
@@ -22,11 +20,13 @@ namespace TelegramAggregator.DialogsControl.Handlers.Commands
     public class AuthCommand : CommandBase<AuthCommandArgs>
     {
         private readonly IBotUserRepository _botUserRepository;
-        
-        public AuthCommand(IBotUserRepository botUserRepository)
+        private readonly INotificationsService _notificationsService;
+
+        public AuthCommand(IBotUserRepository botUserRepository, INotificationsService notificationsService)
             : base(Constants.Command)
         {
             _botUserRepository = botUserRepository;
+            _notificationsService = notificationsService;
         }
 
         public override async Task<UpdateHandlingResult> HandleCommand(IBot bot, Update update, AuthCommandArgs args)
@@ -41,24 +41,26 @@ namespace TelegramAggregator.DialogsControl.Handlers.Commands
             var botUser = _botUserRepository.GetByTelegramId(update.Message.Chat.Id);
             if (botUser == null)
             {
-                botUser = new BotUser()
+                botUser = new BotUser
                 {
                     TelegramChatId = update.Message.Chat.Id,
                     TelegramUserId = update.Message.Chat.Id
-                };
+                };                
             }
 
             try
             {
                 var userInfo = botUser.AuthorizeVk(acessToken);
+                await _notificationsService.EnableNotifications(botUser);
                 _botUserRepository.Add(botUser);
-                await bot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"Вы авторизованы как: {userInfo.FirstName} {userInfo.LastName}, id{userInfo.Id}");
+                await bot.Client.SendTextMessageAsync(update.Message.Chat.Id,
+                    $"Вы авторизованы как: {userInfo.FirstName} {userInfo.LastName}, id{userInfo.Id} {update.Message.Chat.Id}");
             }
             catch (Exception e)
             {
                 await bot.Client.SendTextMessageAsync(update.Message.Chat.Id, e.Message);
             }
-  
+
             return UpdateHandlingResult.Handled;
         }
     }

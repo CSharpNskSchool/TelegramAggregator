@@ -11,8 +11,8 @@ namespace TelegramAggregator.Model.Extensions
         public static User GetUserById(this VkApi vkApi, long id)
         {
             var screenName = $"id{id}";
-            
-            var peers = vkApi.Users.Get(new[] {screenName}, ProfileFields.All, null, true);
+
+            var peers = vkApi.Users.Get(new[] {screenName}, ProfileFields.FirstName | ProfileFields.LastName, null, true);
 
             if (!peers.Any())
             {

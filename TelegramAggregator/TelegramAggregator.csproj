@@ -26,7 +26,4 @@
       <Name>Connectors.Client</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\MessagingControl" />
-  </ItemGroup>
 </Project>

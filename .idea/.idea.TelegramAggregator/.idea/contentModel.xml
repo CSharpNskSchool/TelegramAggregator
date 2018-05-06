@@ -160,7 +160,6 @@
           <e p="MessagesControl" t="Include">
             <e p="MessagesHandler.cs" t="Include" />
           </e>
-          <e p="MessagingControl" t="Include" />
         </e>
         <e p="Model" t="Include">
           <e p="Entities" t="Include">
@@ -186,6 +185,12 @@
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="NotificationsService" t="Include">
+            <e p="INotificationsService.cs" t="Include" />
+            <e p="NotificationsService.cs" t="Include" />
+          </e>
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="TelegramAggregator.csproj" t="IncludeRecursive" />

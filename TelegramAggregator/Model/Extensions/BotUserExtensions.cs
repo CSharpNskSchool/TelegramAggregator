@@ -15,13 +15,13 @@ namespace TelegramAggregator.Model.Extensions
             {
                 throw new ArgumentNullException();
             }
-            
+
             var api = new VkApi();
             api.Authorize(new ApiAuthParams
             {
                 AccessToken = acessToken
             });
-            
+
             var screenName = api.Account.GetProfileInfo().ScreenName;
             var user = GetUserByScreenName(api, screenName);
 
@@ -34,7 +34,7 @@ namespace TelegramAggregator.Model.Extensions
 
             return user;
         }
-        
+
         public static User GetProfileInfoVk(this BotUser botUser)
         {
             if (botUser?.VkAccount == null)
@@ -48,7 +48,7 @@ namespace TelegramAggregator.Model.Extensions
 
             return user;
         }
-        
+
         private static VkApi GetAuthorizedVkApi(BotUser botUser)
         {
             var api = new VkApi();

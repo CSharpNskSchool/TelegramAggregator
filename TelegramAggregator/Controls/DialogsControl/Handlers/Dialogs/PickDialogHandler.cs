@@ -32,10 +32,8 @@ namespace TelegramAggregator.Controls.DialogsControl.Handlers.Dialogs
 
             var botUser = _botUserRepository.GetByTelegramId(update.CallbackQuery.Message.Chat.Id);
             botUser.VkAccount.CurrentPeer = dialogId;
-            
-            await bot.Client.SendTextMessageAsync(
-                update.CallbackQuery.Message.Chat.Id,
-                $"Выбран диалог: {dialogId}");
+
+            await bot.Client.AnswerCallbackQueryAsync(update.CallbackQuery.Id, $"Выбран диалог: {dialogId}");
 
             return UpdateHandlingResult.Handled;
         }

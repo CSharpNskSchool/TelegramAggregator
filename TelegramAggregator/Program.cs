@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using TelegramAggregator;
 using Microsoft.AspNetCore.Hosting;
 
 namespace TelegramAggregator

@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommunicationModels.Models;
 using Telegram.Bot.Framework;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramAggregator.Model.Repositories;
 using VkConnector.Client;
+using Message = CommunicationModels.Models.Message;
 
 namespace TelegramAggregator.Controls.MessagesControl
 {
@@ -27,25 +29,26 @@ namespace TelegramAggregator.Controls.MessagesControl
             var message = update.Message;
             var botUser = _botUserRepository.GetByTelegramId(message.Chat.Id);
             var connector = new ConnectorsClient("http://localhost:5000");
-            
-            await connector.SendMessage(new TransmittedMessage()
+
+            await connector.SendMessage(new TransmittedMessage
             {
-                AuthorizedSender = new AuthorizedUser()
+                AuthorizedSender = new AuthorizedUser
                 {
                     AccessToken = botUser.VkAccount.AcessToken
                 },
-                Message = new CommunicationModels.Models.Message()
+                Message = new Message
                 {
                     Body = new MessageBody(message.Text),
                     Receiver = new ExternalUser(botUser.VkAccount.CurrentPeer)
                 }
             });
-            
+
+            // TODO: Добавить к уведомлению о доставке кнопку "Удалить сообщение" и "Редактировать"
             await bot.Client.SendTextMessageAsync(
                 update.Message.Chat.Id,
                 "Cообщение доставлено",
                 replyToMessageId: message.MessageId);
-            
+
             return UpdateHandlingResult.Handled;
         }
     }
