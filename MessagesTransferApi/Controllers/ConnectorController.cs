@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using MessagesTransferApi.Data.Contexts;
+using MessagesTransferApi.Data.Models;
 using MessagesTransferApi.Logic;
 using MessagesTransferApi.Models;
-using MessagesTransferApi.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using CommunicationModels.Models;
 
 namespace MessagesTransferApi.Controllers
@@ -14,24 +13,27 @@ namespace MessagesTransferApi.Controllers
     [Route("api/[Controller]")]
     public class ConnectorController : Controller
     {
-        private readonly DataContext _context;
         private readonly IAggregatorSenderService _aggregatorSender;
+        private readonly DataContext _context;
 
         public ConnectorController(DataContext context, IAggregatorSenderService aggregatorSender)
         {
-            this._context = context;
-            this._aggregatorSender = aggregatorSender;
+            _context = context;
+            _aggregatorSender = aggregatorSender;
         }
 
         /// <summary>
-        /// Получить список всех коннекторов
+        ///     Получить список всех коннекторов
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetConnectors() => Json(_context.Connectors);
+        public IActionResult GetConnectors()
+        {
+            return Json(_context.Connectors);
+        }
 
         /// <summary>
-        /// Добавить коннектор к МТА
+        ///     Добавить коннектор к МТА
         /// </summary>
         /// <param name="connectorData"></param>
         /// <returns></returns>
@@ -43,7 +45,7 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var connector = new Connector()
+            var connector = new Connector
             {
                 NetworkName = connectorData.NetworkName,
                 Url = connectorData.Url
@@ -56,7 +58,7 @@ namespace MessagesTransferApi.Controllers
         }
 
         /// <summary>
-        /// Отправка сообщения в аггрегатор
+        ///     Отправка сообщения в аггрегатор
         /// </summary>
         /// <param name="messageData">данные для отправки</param>
         /// <param name="networkName">название соц.сети</param>

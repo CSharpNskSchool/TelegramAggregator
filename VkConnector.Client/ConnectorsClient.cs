@@ -10,9 +10,9 @@ namespace VkConnector.Client
 {
     public class ConnectorsClient : IConnectorsClient
     {
-        private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
         private readonly string _apiVersion;
+        private readonly HttpClient _httpClient;
 
         public ConnectorsClient(string apiUrl, string apiVersion = null)
         {
@@ -20,7 +20,7 @@ namespace VkConnector.Client
             _apiVersion = apiVersion;
             _httpClient = new HttpClient();
         }
-        
+
         public Task SendMessage(TransmittedMessage transmittedMessage)
         {
             return InvokeApiMethod(HttpMethod.Post, "transfer", content: transmittedMessage);
@@ -41,24 +41,24 @@ namespace VkConnector.Client
             return MakeRequest(httpMethod, path, ticket, content, headers);
         }
 
-        private async Task<T> InvokeApiMethod<T>(HttpMethod httpMethod, 
-                                                 string path, 
-                                                 string ticket = null,
-                                                 object content = null,
-                                                 Dictionary<string, string> headers = null)
+        private async Task<T> InvokeApiMethod<T>(HttpMethod httpMethod,
+            string path,
+            string ticket = null,
+            object content = null,
+            Dictionary<string, string> headers = null)
         {
             var response = await MakeRequest(httpMethod, path, ticket, content, headers);
-            
+
             var serializedObject = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(serializedObject);
         }
 
         private async Task<HttpResponseMessage> MakeRequest(HttpMethod httpMethod,
-                                                            string path,
-                                                            string bearerToken = null,
-                                                            object content = null,
-                                                            Dictionary<string, string> headers = null)
+            string path,
+            string bearerToken = null,
+            object content = null,
+            Dictionary<string, string> headers = null)
         {
             // var request = new HttpRequestMessage(httpMethod, $"{_apiUrl}/api/{_apiVersion}/{path}");
             var request = new HttpRequestMessage(httpMethod, $"{_apiUrl}/api/{path}");
@@ -76,14 +76,14 @@ namespace VkConnector.Client
 
             if (headers != null)
             {
-                foreach(var header in headers)
+                foreach (var header in headers)
                 {
                     request.Headers.Add(header.Key, header.Value);
                 }
             }
 
             var response = await _httpClient.SendAsync(request);
-            
+
             if (!response.IsSuccessStatusCode)
             {
                 HandleError(response);

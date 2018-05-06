@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MessagesTransferApi.Data.Models
+﻿namespace MessagesTransferApi.Data.Models
 {
     public class Connector
     {

@@ -1,6 +1,6 @@
-﻿using CommunicationModels.Models;
-using System.Threading.Tasks;
-using TelegramAggregator.Data.Entities;
+﻿using System.Threading.Tasks;
+using CommunicationModels.Models;
+using TelegramAggregator.Model.Entities;
 
 namespace TelegramAggregator.Services.NotificationsService
 {

@@ -3,7 +3,7 @@
 namespace CommunicationModels.Models
 {
     /// <summary>
-    /// Сообщение для отправки
+    ///     Сообщение для отправки
     /// </summary>
     public class Message
     {

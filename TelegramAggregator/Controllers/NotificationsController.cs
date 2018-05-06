@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommunicationModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using TelegramAggregator.Services.NotificationsService;
@@ -6,7 +7,7 @@ using TelegramAggregator.Services.NotificationsService;
 namespace TelegramAggregator.Controllers
 {
     /// <summary>
-    /// Получение новых сообщений для пользователей
+    ///     Получение новых сообщений для пользователей
     /// </summary>
     [Route("api/[controller]")]
     public class NotificationsController : Controller
@@ -19,7 +20,7 @@ namespace TelegramAggregator.Controllers
         }
 
         /// <summary>
-        /// Отправка нового сообщения пользователю
+        ///     Отправка нового сообщения пользователю
         /// </summary>
         /// <param name="id">Id телеграмм-пользователя или его чата</param>
         /// <param name="recievedMessage">Доставляемое сообщение</param>

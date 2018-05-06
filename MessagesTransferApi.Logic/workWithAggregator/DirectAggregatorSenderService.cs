@@ -1,8 +1,8 @@
-﻿using System.Text;
-using MessagesTransferApi.Data.Models;
-using System.Net.Http;
-using Newtonsoft.Json;
+﻿using System.Net.Http;
+using System.Text;
 using CommunicationModels.Models;
+using MessagesTransferApi.Data.Models;
+using Newtonsoft.Json;
 
 namespace MessagesTransferApi.Logic
 {
