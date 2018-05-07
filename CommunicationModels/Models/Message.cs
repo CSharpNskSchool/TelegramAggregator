@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CommunicationModels.Models
 {
@@ -19,5 +20,10 @@ namespace CommunicationModels.Models
         /// </summary>
         [Required(ErrorMessage = "Нету тела сообщения")]
         public MessageBody Body { get; set; }
+        
+        /// <summary>
+        ///     Приложения к сообщению
+        /// </summary>
+        public IEnumerable<MessageAttachment> Attachments { get; set; }
     }
 }

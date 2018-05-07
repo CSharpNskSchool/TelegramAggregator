@@ -58,8 +58,8 @@ namespace TelegramAggregator.Services.NotificationsService
             heading += recievedMessage.ChatId != -1
                 ? $"в беседе c{recievedMessage.ChatId}"
                 : string.Empty;
-
-            await _bot.Client.SendTextMessageAsync(chatId, $"`{heading}`\r\n {recievedMessage.Body.Text}", ParseMode.Markdown);
+          
+            await _bot.Client.SendTextMessageAsync(chatId, $"`{heading}`\r\n {recievedMessage.Message.Body.Text}", ParseMode.Markdown);
         }
     }
 }

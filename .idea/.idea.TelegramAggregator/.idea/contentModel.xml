@@ -12,6 +12,7 @@
           <e p="AuthorizedUser.cs" t="Include" />
           <e p="ExternalUser.cs" t="Include" />
           <e p="Message.cs" t="Include" />
+          <e p="MessageAttachment.cs" t="Include" />
           <e p="MessageBody.cs" t="Include" />
           <e p="RecievedMessage.cs" t="Include" />
           <e p="SubscriptionModel.cs" t="Include" />
@@ -40,7 +41,6 @@
         <e p="MessagesTransferApi.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
           <e p="ConnectorData.cs" t="Include" />
-          <e p="ConnectorMessage.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -204,6 +204,7 @@
           <e p="SubscribeController.cs" t="Include" />
           <e p="TransferController.cs" t="Include" />
         </e>
+        <e p="devnull.png" t="Include" />
         <e p="Extensions" t="Include">
           <e p="TransmittedMessageExtensions.cs" t="Include" />
           <e p="VkApiExtensions.cs" t="Include" />

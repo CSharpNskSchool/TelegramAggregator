@@ -5,12 +5,12 @@
     /// </summary>
     public class RecievedMessage
     {
-        public RecievedMessage(long chatId, ExternalUser sender, bool isIncoming, MessageBody body)
+        public RecievedMessage(long chatId, ExternalUser sender, bool isIncoming, Message message)
         {
             ChatId = chatId;
             Sender = sender;
             IsIncoming = isIncoming;
-            Body = body;
+            Message = message;
         }
 
         /// <summary>
@@ -37,6 +37,6 @@
         /// <summary>
         ///     Тело сообщения
         /// </summary>
-        public MessageBody Body { get; }
+        public Message Message { get; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,6 +9,7 @@ using CommunicationModels.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VkNet;
+using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
 
 namespace VkConnector.Services
@@ -59,10 +63,26 @@ namespace VkConnector.Services
                             chatId: message.ChatId ?? -1,
                             sender: new ExternalUser(message.UserId ?? -1),
                             isIncoming: !message.Out ?? false,
-                            body: new MessageBody(message.Body)));
+                            message: new Message()
+                            {
+                                Body = new MessageBody(message.Body),
+//                                Attachments = AssemblyReceivedAttachments(message.Attachments)
+                            })
+                    );
                 }
 
                 ts = updates["ts"].ToObject<ulong>();
+            }
+        }
+
+        private IEnumerable<MessageAttachment> AssemblyReceivedAttachments(ReadOnlyCollection<Attachment> messageAttachments)
+        {
+            foreach (var attachment in messageAttachments)
+            {
+                yield return new MessageAttachment()
+                {
+                    AttachmentType = MessageAttachment.Type.Undifined
+                };
             }
         }
 
@@ -73,7 +93,7 @@ namespace VkConnector.Services
 
             var a = client.PostAsync(url, toSend);
 
-            Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Body.Text} \r\n\r\n");
+            Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Message.Body.Text} \r\n\r\n");
             Console.WriteLine(url);
             Console.WriteLine($"Код ответа: {a.Result.StatusCode}");
         }
