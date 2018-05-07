@@ -75,12 +75,18 @@ namespace MessagesTransferApi.Controllers
 
             var user = await _context
                 .Users
-                .Include(u => u.Accounts)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {
-                return BadRequest("Неверный токен");
+                return BadRequest("Неверный id пользователя");
+            }
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.UserId == id && a.PlatformName == networkName);
+
+            if(account == null)
+            {
+                return NotFound("Пользователь не привязан к данной сети");
             }
 
             _aggregatorSender.SendMessage(user, message);

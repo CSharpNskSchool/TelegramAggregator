@@ -10,8 +10,6 @@ namespace MessagesTransferApi.Data.Models
 
         public string UserToken { get; set; }
 
-        public virtual List<NetworkAuthData> Accounts { get; set; }
-
         public string FeedbackUrl { get; set; }
     }
 }

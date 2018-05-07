@@ -37,10 +37,7 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Users")]
-        public IActionResult GetUsers()
-        {
-            return Json(_context.Users);
-        }
+        public IActionResult GetUsers() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Users));
 
         /// <summary>
         ///     Получить все аккаунты
@@ -48,16 +45,13 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Accounts")]
-        public IActionResult GetAccounts()
-        {
-            return Json(_context.Accounts);
-        }
+        public IActionResult GetAccounts() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Accounts));
 
         /// <summary>
         ///     Добавить пользователя
         /// </summary>
         /// <param name="userData"> данные о пользователе </param>
-        /// <returns></returns>
+        /// <returns> token </returns>
         [HttpPost]
         [Route("Users")]
         public async Task<IActionResult> AddUser([FromBody] UserData userData)
@@ -67,13 +61,18 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest(ModelState);
             }
 
+            if(!Uri.TryCreate(userData.Url, UriKind.RelativeOrAbsolute, out var result))
+            {
+                return BadRequest("Неверный URL");
+            }
+
             var existedUser = await _context
                 .Users
                 .FirstOrDefaultAsync(u => u.Login == userData.Login);
 
             if (existedUser != null)
             {
-                return BadRequest("Логин уже существует");
+                return BadRequest("Пользователь уже зарегестрирован");
             }
 
             var userToken = _tokenGenerator.GenerateToken(userData.Login);
@@ -88,7 +87,7 @@ namespace MessagesTransferApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Json(new {generatedToken = userToken});
+            return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(userToken));
         }
 
 
@@ -133,7 +132,6 @@ namespace MessagesTransferApi.Controllers
 
             var user = await _context
                 .Users
-                .Include(u => u.Accounts)
                 .FirstOrDefaultAsync(u => u.UserToken == userToken);
 
             if (user == null)
@@ -141,36 +139,47 @@ namespace MessagesTransferApi.Controllers
                 return NotFound("Неверный токен");
             }
 
-            var connector = _context
+            var connector = await _context
                 .Connectors
-                .FirstOrDefault(c => c.NetworkName == account.NetworkName);
+                .FirstOrDefaultAsync(c => c.NetworkName == account.NetworkName);
 
             if (connector == null)
             {
                 return NotFound("Не существует запрашиваемой социальной сети");
             }
 
-            var networkAuthData = new NetworkAuthData
+            var accountUser = await _context
+                .Accounts
+                .FirstOrDefaultAsync(usAccount => usAccount.PlatformName == account.NetworkName && usAccount.User.UserToken == userToken);
+
+            if (accountUser == null)
             {
-                UserId = user.Id,
-                User = user,
-                PlatformName = account.NetworkName,
-                AccessToken = account.AccessToken
-            };
+                var networkAuthData = new NetworkAuthData
+                {
+                    UserId = user.Id,
+                    User = user,
+                    PlatformName = account.NetworkName,
+                    AccessToken = account.AccessToken
+                };
+
+                _context.Accounts.Add(networkAuthData);
+            }
+            else
+            {
+                accountUser.AccessToken = account.AccessToken;
+            }
 
             await new ConnectorsClient(connector.Url)
-                    .SetWebHook(new SubscriptionModel()
-                    {
-                        Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
-                        User = new AuthorizedUser()
+                        .SetWebHook(new SubscriptionModel()
                         {
-                            AccessToken = account.AccessToken
-                        }
-                    });
+                            Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
+                            User = new AuthorizedUser()
+                            {
+                                AccessToken = account.AccessToken
+                            }
+                        });
 
-            user.Accounts.Add(networkAuthData);
             await _context.SaveChangesAsync();
-
             return Ok();
         }
 
@@ -192,7 +201,6 @@ namespace MessagesTransferApi.Controllers
 
             var user = await _context
                 .Users
-                .Include(u => u.Accounts)
                 .FirstOrDefaultAsync(u => u.UserToken == userToken);
 
             if (user == null)
@@ -200,12 +208,11 @@ namespace MessagesTransferApi.Controllers
                 return NotFound("Неверный токен");
             }
 
-            var accessToken = user
+            var account = _context
                 .Accounts
-                .FirstOrDefault(a => a.PlatformName == transmittedData.NetworkName)
-                .AccessToken;
+                .FirstOrDefault(a => a.PlatformName == transmittedData.NetworkName && a.User.UserToken == userToken);
 
-            if (accessToken == null)
+            if (account == null || account.AccessToken == null)
             {
                 return BadRequest("Для данной сети токен даступа не найден");
             }
@@ -216,7 +223,7 @@ namespace MessagesTransferApi.Controllers
 
             await new ConnectorsClient(connector.Url).SendMessage(new TransmittedMessage
             {
-                AuthorizedSender = new AuthorizedUser {AccessToken = accessToken},
+                AuthorizedSender = new AuthorizedUser { AccessToken = account.AccessToken },
                 Message = transmittedData.Message
             });
 
