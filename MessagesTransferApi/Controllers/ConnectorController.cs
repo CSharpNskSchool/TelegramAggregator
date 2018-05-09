@@ -6,6 +6,7 @@ using MessagesTransferApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommunicationModels.Models;
+using System;
 
 namespace MessagesTransferApi.Controllers
 {
@@ -45,6 +46,11 @@ namespace MessagesTransferApi.Controllers
                 return BadRequest(ModelState);
             }
 
+            if(!Uri.TryCreate(connectorData.Url, UriKind.RelativeOrAbsolute, out var uri))
+            {
+                return BadRequest("Неверный URL");
+            }
+
             var connector = new Connector
             {
                 NetworkName = connectorData.NetworkName,
@@ -66,7 +72,7 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Messages/{id:int}")]
-        public async Task<IActionResult> SendMessage([FromBody] RecievedMessage message, [FromQuery] string networkName, int id)
+        public async Task<IActionResult> SendMessage(int id, [FromQuery] string networkName, [FromBody] RecievedMessage message)
         {
             if (!ModelState.IsValid)
             {
@@ -89,8 +95,15 @@ namespace MessagesTransferApi.Controllers
                 return NotFound("Пользователь не привязан к данной сети");
             }
 
-            _aggregatorSender.SendMessage(user, message);
-            return Ok();
+            try
+            {
+                _aggregatorSender.SendMessage(user, message);
+                return Ok();
+            }
+            catch
+            {
+                return NotFound(new { ErrorMessage = "Не удалось отправить сообщение" });
+            }
         }
     }
 }
