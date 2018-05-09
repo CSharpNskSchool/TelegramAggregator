@@ -13,7 +13,6 @@ namespace MessagesTransferApi.Logic
         public async void SendMessage(User user, RecievedMessage message)
         {
             var serializedMessage = JsonConvert.SerializeObject(message);
-
             var content = new StringContent(serializedMessage, Encoding.UTF8, "application/json");
             await sender.SendPostRequestAsync(content, user.FeedbackUrl);
         }

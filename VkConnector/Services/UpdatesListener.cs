@@ -53,29 +53,29 @@ namespace VkConnector.Services
 
                 foreach (var message in longPollHistory.Messages)
                 {
-                    SendToWebHook(
-                        subscriptionModel.Url,
-                        new RecievedMessage(
-                            chatId: message.ChatId ?? -1,
-                            sender: new ExternalUser(message.UserId ?? -1),
-                            isIncoming: !message.Out ?? false,
-                            body: new MessageBody(message.Body)));
+                    await SendToWebHook(
+                            subscriptionModel.Url,
+                            new RecievedMessage(
+                                chatId: message.ChatId ?? -1,
+                                sender: new ExternalUser(message.UserId ?? -1),
+                                isIncoming: !message.Out ?? false,
+                                body: new MessageBody(message.Body)));
                 }
 
                 ts = updates["ts"].ToObject<ulong>();
             }
         }
 
-        private void SendToWebHook(Uri url, RecievedMessage message)
+        private async Task SendToWebHook(Uri url, RecievedMessage message)
         {
             var client = new HttpClient();
             var toSend = new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json");
 
-            var a = client.PostAsync(url, toSend);
+            var a = await client.PostAsync(url, toSend);
 
             Console.WriteLine($"\r\n\r\nПолучено новое сообщние от {message.Sender.Id}: {message.Body.Text} \r\n\r\n");
             Console.WriteLine(url);
-            Console.WriteLine($"Код ответа: {a.Result.StatusCode}");
+            Console.WriteLine($"Код ответа: {a.StatusCode}");
         }
     }
 }

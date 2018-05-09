@@ -37,7 +37,7 @@ namespace MessagesTransferApi.Controllers
         /// <returns> список соц.сетей </returns>
         [HttpGet]
         [Route("Networks")]
-        public IActionResult GetNetworks() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Connectors.Select(x => x.NetworkName)));
+        public IActionResult GetNetworks() => Ok(_context.Connectors.Select(x => x.NetworkName));
 
         /// <summary>
         ///     Получить всех пользователей
@@ -45,7 +45,7 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Users")]
-        public IActionResult GetUsers() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Users));
+        public IActionResult GetUsers() => Ok(_context.Users);
 
         /// <summary>
         ///     Получить все аккаунты
@@ -53,7 +53,7 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Accounts")]
-        public IActionResult GetAccounts() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Accounts));
+        public IActionResult GetAccounts() => Ok(_context.Accounts);
 
         /// <summary>
         ///     Добавить пользователя
@@ -95,32 +95,7 @@ namespace MessagesTransferApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(userToken));
-        }
-
-
-        [HttpPost]
-        [Route("Webhook")]
-        public async Task<IActionResult> AttachWebhook([FromBody] string url, [FromQuery] string userToken)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await _context
-                .Users
-                .FirstOrDefaultAsync(u => u.UserToken == userToken);
-
-            if (user == null)
-            {
-                return NotFound("неверный токен");
-            }
-
-            user.FeedbackUrl = url;
-            await _context.SaveChangesAsync();
-
-            return Ok();
+            return Ok(new { UserToken = userToken });
         }
 
         /// <summary>
@@ -180,7 +155,7 @@ namespace MessagesTransferApi.Controllers
             await new ConnectorsClient(connector.Url)
                         .SetWebHook(new SubscriptionModel()
                         {
-                            Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
+                            Url = new Uri($"{request.Scheme}://{request.Host.ToUriComponent()}/api/Connector/Messages/{user.Id}?networkName={account.NetworkName}"),
                             User = new AuthorizedUser()
                             {
                                 AccessToken = account.AccessToken
