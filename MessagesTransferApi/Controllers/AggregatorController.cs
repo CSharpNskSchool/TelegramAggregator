@@ -32,6 +32,14 @@ namespace MessagesTransferApi.Controllers
         }
 
         /// <summary>
+        ///     Получить названия социальных сетей
+        /// </summary>
+        /// <returns> список соц.сетей </returns>
+        [HttpGet]
+        [Route("Networks")]
+        public IActionResult GetNetworks() => Ok(Newtonsoft.Json.JsonConvert.SerializeObject(_context.Connectors.Select(x => x.NetworkName)));
+
+        /// <summary>
         ///     Получить всех пользователей
         /// </summary>
         /// <returns></returns>
@@ -191,7 +199,8 @@ namespace MessagesTransferApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Messages")]
-        public async Task<IActionResult> SendMessage([FromBody] AggregatorMessage transmittedData,
+        public async Task<IActionResult> SendMessage(
+            [FromBody] AggregatorMessage transmittedData,
             [FromQuery] string userToken)
         {
             if (!ModelState.IsValid)
