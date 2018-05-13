@@ -2,7 +2,7 @@
 using CommunicationModels.Models;
 using TelegramAggregator.Model.Entities;
 
-namespace TelegramAggregator.Services.NotificationsService
+namespace TelegramAggregator.Controls.MessagesControl.Services.NotificationsService
 {
     public interface INotificationsService
     {

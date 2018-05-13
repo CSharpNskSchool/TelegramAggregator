@@ -57,21 +57,32 @@ namespace VkConnector.Services
 
                 foreach (var message in longPollHistory.Messages)
                 {
-                    SendToWebHook(
-                        subscriptionModel.Url,
-                        new RecievedMessage(
-                            chatId: message.ChatId ?? -1,
-                            sender: new ExternalUser(message.UserId ?? -1),
-                            isIncoming: !message.Out ?? false,
-                            message: new Message()
-                            {
-                                Body = new MessageBody(message.Body),
-//                                Attachments = AssemblyReceivedAttachments(message.Attachments)
-                            })
-                    );
+                    SendMessageToWebHook(subscriptionModel, message);
                 }
 
                 ts = updates["ts"].ToObject<ulong>();
+            }
+        }
+
+        private void SendMessageToWebHook(SubscriptionModel subscriptionModel, VkNet.Model.Message message)
+        {
+            SendToWebHook(
+                subscriptionModel.Url,
+                new RecievedMessage(
+                    chatId: message.ChatId ?? -1,
+                    sender: new ExternalUser(message.UserId ?? -1),
+                    isIncoming: !message.Out ?? false,
+                    isForwarded: !message.Out.HasValue,
+                    message: new Message()
+                    {
+                        Body = new MessageBody(message.Body),
+                        Attachments = AssemblyReceivedAttachments(message.Attachments)
+                    })
+            );
+
+            foreach (var forwardedMessage in message.ForwardedMessages)
+            {
+                SendMessageToWebHook(subscriptionModel, forwardedMessage);
             }
         }
 

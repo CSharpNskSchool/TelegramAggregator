@@ -13,8 +13,8 @@ using TelegramAggregator.Controls.AuthControl;
 using TelegramAggregator.Controls.CalendarControl;
 using TelegramAggregator.Controls.DialogsControl;
 using TelegramAggregator.Controls.MessagesControl;
+using TelegramAggregator.Controls.MessagesControl.Services.NotificationsService;
 using TelegramAggregator.Model.Repositories;
-using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator
 {

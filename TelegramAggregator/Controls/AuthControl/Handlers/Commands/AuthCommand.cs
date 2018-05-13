@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Telegram.Bot.Framework;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 using TelegramAggregator.Controls.AuthControl.Common;
+using TelegramAggregator.Controls.MessagesControl.Services.NotificationsService;
 using TelegramAggregator.Model.Entities;
 using TelegramAggregator.Model.Extensions;
 using TelegramAggregator.Model.Repositories;
-using TelegramAggregator.Services.NotificationsService;
 
 namespace TelegramAggregator.DialogsControl.Handlers.Commands
 {
@@ -31,9 +33,10 @@ namespace TelegramAggregator.DialogsControl.Handlers.Commands
 
         public override async Task<UpdateHandlingResult> HandleCommand(IBot bot, Update update, AuthCommandArgs args)
         {
-            if (args.ArgsInput.Split(" ").Length != 1)
+            if (args.ArgsInput.Split(" ", StringSplitOptions.RemoveEmptyEntries).Length != 1)
             {
-                await bot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"usage: {Constants.CommandFormat}");
+                await bot.Client.SendTextMessageAsync(update.Message.Chat.Id, $"`Формат команды: {Constants.CommandFormat}`", ParseMode.Markdown);
+                return UpdateHandlingResult.Handled;
             }
 
             var acessToken = args.ArgsInput;
@@ -47,14 +50,19 @@ namespace TelegramAggregator.DialogsControl.Handlers.Commands
                     TelegramUserId = update.Message.Chat.Id
                 };                
             }
+            
+            IReplyMarkup replyMarkup = new ReplyKeyboardRemove();
 
             try
             {
                 var userInfo = botUser.AuthorizeVk(acessToken);
                 await _notificationsService.EnableNotifications(botUser);
                 _botUserRepository.Add(botUser);
-                await bot.Client.SendTextMessageAsync(update.Message.Chat.Id,
-                    $"Вы авторизованы как: {userInfo.FirstName} {userInfo.LastName}, id{userInfo.Id} {update.Message.Chat.Id}");
+                await bot.Client.SendTextMessageAsync(
+                    update.Message.Chat.Id,
+                    $"`Вы авторизованы как: {userInfo.FirstName} {userInfo.LastName}`", 
+                    ParseMode.Markdown,
+                    replyMarkup: replyMarkup);
             }
             catch (Exception e)
             {

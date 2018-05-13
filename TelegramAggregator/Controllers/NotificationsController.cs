@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using CommunicationModels.Models;
 using Microsoft.AspNetCore.Mvc;
-using TelegramAggregator.Services.NotificationsService;
+using TelegramAggregator.Controls.MessagesControl.Services.NotificationsService;
 
 namespace TelegramAggregator.Controllers
 {

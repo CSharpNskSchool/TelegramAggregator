@@ -96,7 +96,7 @@ namespace TelegramAggregator.Controls.MessagesControl
                 return null;
             
             var stickerFile = await bot.Client.GetFileAsync(message.Sticker.FileId);
-
+            
             return new MessageAttachment()
             {
                 AttachmentType = MessageAttachment.Type.Image,
