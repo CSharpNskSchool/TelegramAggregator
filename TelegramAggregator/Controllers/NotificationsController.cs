@@ -9,7 +9,7 @@ namespace TelegramAggregator.Controllers
     /// <summary>
     ///     Получение новых сообщений для пользователей
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("v0/api/[controller]")]
     public class NotificationsController : Controller
     {
         private readonly INotificationsService _notificationsService;

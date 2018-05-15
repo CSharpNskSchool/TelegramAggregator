@@ -13,7 +13,7 @@ using VkConnector.Client;
 namespace MessagesTransferApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[Controller]")]
+    [Route("v0/api/[Controller]")]
     public class AggregatorController : Controller
     {
         private readonly DataContext _context;

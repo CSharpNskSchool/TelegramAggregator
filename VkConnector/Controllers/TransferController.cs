@@ -9,7 +9,7 @@ using VkConnector.Model;
 namespace VkConnector.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("v0/api/[controller]")]
     public class TransferController : Controller
     {
         /// <summary>
