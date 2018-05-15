@@ -14,7 +14,7 @@ namespace VkConnector.Client
         private readonly string _apiVersion;
         private readonly HttpClient _httpClient;
 
-        public ConnectorsClient(string apiUrl, string apiVersion = null)
+        public ConnectorsClient(string apiUrl, string apiVersion = "v0")
         {
             _apiUrl = apiUrl;
             _apiVersion = apiVersion;
@@ -48,9 +48,7 @@ namespace VkConnector.Client
             Dictionary<string, string> headers = null)
         {
             var response = await MakeRequest(httpMethod, path, ticket, content, headers);
-
             var serializedObject = await response.Content.ReadAsStringAsync();
-
             return JsonConvert.DeserializeObject<T>(serializedObject);
         }
 

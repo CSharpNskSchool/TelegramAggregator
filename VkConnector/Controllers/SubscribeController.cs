@@ -8,7 +8,7 @@ using VkConnector.Services;
 namespace VkConnector.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("v0/api/[controller]")]
     public class SubscribeController : Controller
     {
         private readonly IUpdatesListener _updatesListener;

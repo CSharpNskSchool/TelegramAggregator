@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommunicationModels\CommunicationModels.csproj" />
+    <ProjectReference Include="..\MessagesTransferApi.Client\MessagesTransferApi.Client.csproj" />
     <ProjectReference Include="..\MessagesTransferApi.Data\MessagesTransferApi.Data.csproj" />
     <ProjectReference Include="..\MessagesTransferApi.Logic\MessagesTransferApi.Logic.csproj" />
     <ProjectReference Include="..\VkConnector.Client\Connectors.Client.csproj" />

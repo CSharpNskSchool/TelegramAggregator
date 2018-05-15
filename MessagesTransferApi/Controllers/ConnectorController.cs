@@ -2,16 +2,16 @@
 using MessagesTransferApi.Data.Contexts;
 using MessagesTransferApi.Data.Models;
 using MessagesTransferApi.Logic;
-using MessagesTransferApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommunicationModels.Models;
 using System;
+using MessagesTransferApi.Client;
 
 namespace MessagesTransferApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[Controller]")]
+    [Route("v0/api/[Controller]")]
     public class ConnectorController : Controller
     {
         private readonly IAggregatorSenderService _aggregatorSender;

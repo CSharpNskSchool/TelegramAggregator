@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MessagesTransferApi.Models
+namespace CommunicationModels.Models
 {
     public class ConnectorData
     {
